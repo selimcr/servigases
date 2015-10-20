@@ -1,0 +1,52 @@
+_welcome:
+    pattern:  /
+    defaults: { _controller: Tech506CallServiceBundle:Public:index }
+
+_admin_secured:
+    resource: "@Tech506CallServiceBundle/Controller/AdminController.php"
+    type:     annotation
+
+_admin_users:
+    resource: "@Tech506CallServiceBundle/Controller/UsersController.php"
+    type:     annotation
+    prefix:   /admin
+
+_admin_technicians:
+    resource: "@Tech506CallServiceBundle/Controller/TechniciansController.php"
+    type:     annotation
+    prefix:   /admin
+
+_admin_sellers:
+    resource: "@Tech506CallServiceBundle/Controller/SellersController.php"
+    type:     annotation
+    prefix:   /admin
+
+_admin_sells:
+    resource: "@Tech506CallServiceBundle/Controller/InvoiceController.php"
+    type:     annotation
+    prefix:   /admin
+
+_admin_clients:
+    resource: "@Tech506CallServiceBundle/Controller/ClientsController.php"
+    type:     annotation
+    prefix:   /admin
+
+_admin_products:
+    resource: "@Tech506CallServiceBundle/Controller/ProductsController.php"
+    type:     annotation
+    prefix:   /admin
+
+_admin_services:
+    resource: "@Tech506CallServiceBundle/Controller/ServicesController.php"
+    type:     annotation
+    prefix:   /admin
+
+_admin_liquidations:
+    resource: "@Tech506CallServiceBundle/Controller/LiquidationsController.php"
+    type:     annotation
+    prefix:   /admin
+
+_admin_reports:
+    resource: "@Tech506CallServiceBundle/Controller/ReportsController.php"
+    type:     annotation
+    prefix:   /admin

@@ -1,0 +1,162 @@
+{% if service is defined %}
+    {% set stateId = service.state %}
+    {% set selectedSellerId = service.seller.id %}
+    {% set neighborhood = service.neighborhood %}
+    {% set addressLocation = service.address %}
+    {% set addressDetail = service.addressDetail %}
+    {% set referencePoint = service.referencePoint %}
+    {% set observations = service.observations %}
+    {% set scheduleDate = service.scheduleDate|date('d/m/Y') %}
+    {% set scheduleHour = service.hour %}
+{% else %}
+    {% set stateId = 0 %}
+    {% set selectedSellerId = sellerId %}
+    {% set neighborhood = "" %}
+    {% set addressLocation = "" %}
+    {% set addressDetail = "" %}
+    {% set referencePoint = "" %}
+    {% set observations = "" %}
+    {% set scheduleDate = "" %}
+    {% set scheduleHour = "" %}
+{% endif %}
+
+<!-- Visit Information Panel -->
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{ 'visit.important.information'|trans }}</h3>
+    </div>
+    <div class="panel-body">
+        <form class="form-horizontal">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    {% if isAdmin %}
+                        <!-- Seller -->
+                        <div class="form-group">
+                            <label class="control-label col-lg-4" for="seller">{{ 'assign.sale.to'|trans }} *</label>
+
+                            <div class="col-lg-8">
+                                <select id="seller" name="seller" class="form-control select2 read-only-on-canceled">
+                                    {% for user in users %}
+                                        <option value="{{ user.id }}"
+                                                {{ (selectedSellerId == user.id)? ' selected="selected"':'' }}
+                                                >{{ user.fullName }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    {% else %}
+                        <input type="hidden" id="seller" name="seller" value="{{ app.user.id }}">
+                    {% endif %}
+
+                    <!-- State -->
+                    <div class="form-group">
+                        <label class="control-label col-lg-4" for="state">
+                            {{ 'state'|trans }} *</label>
+
+                        <div class="col-lg-8">
+                            {{ renderStates(stateId)|raw }}
+                        </div>
+                    </div>
+                    <!-- Neighborhood -->
+                    <div class="form-group">
+                        <label class="control-label col-lg-4" for="neighborhood">
+                            &nbsp;&nbsp;{{ 'neighborhood'|trans }}</label>
+
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control read-only-on-canceled" id="neighborhood" name="neighborhood"
+                                   maxlength="255" value="{{ neighborhood }}">
+                        </div>
+                    </div>
+                    <!-- Address -->
+                    <div class="form-group">
+                        <label class="control-label col-lg-4" for="address">
+                            {{ 'address'|trans }} *</label>
+
+                        <div class="col-lg-8">
+                            {{ renderAddressInputs(addressLocation)|raw }}
+                            <p class="help-block">{{ 'service.address.help'|trans }}</p>
+                        </div>
+                    </div>
+                    <!-- addressDetail -->
+                    <div class="form-group">
+                        <label class="control-label col-lg-4" for="addressDetail">
+                            {{ 'address.detail'|trans }} *</label>
+
+                        <div class="col-lg-8">
+                            <textarea class="form-control read-only-on-canceled" id="addressDetail" name="addressDetail">{{ addressDetail }}</textarea>
+                            <p class="help-block">{{ 'address.detail.help'|trans }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <!-- Reference Point -->
+                    <div class="form-group">
+                        <label class="control-label col-lg-4" for="referencePoint">{{ 'reference.point'|trans }}
+                            *</label>
+
+                        <div class="col-lg-8">
+                            <textarea class="form-control read-only-on-canceled" id="referencePoint" name="referencePoint">{{ referencePoint }}</textarea>
+
+                            <p class="help-block">{{ 'reference.point.help'|trans }}</p>
+                        </div>
+                    </div>
+                    <!-- observations -->
+                    <div class="form-group">
+                        <label class="control-label col-lg-4" for="observations">{{ 'observations'|trans }}</label>
+
+                        <div class="col-lg-8">
+                            <textarea class="form-control read-only-on-canceled" id="observations" name="observations">{{ observations }}</textarea>
+                            <p class="help-block">{{ 'service.observations.help'|trans }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <!-- visitDate -->
+                    <div class="form-group">
+                        <label class="control-label col-lg-4" for="scheduleDate">{{ 'visit.date'|trans }}</label>
+
+                        <div class="col-lg-8">
+                            <input class="form-control read-only-on-canceled" type="text" id="scheduleDate"
+                                   name="scheduleDate" value="{{ scheduleDate }}">
+                            <p class="help-block">{{ 'input.date.note'|trans }}</p>
+                        </div>
+                    </div>
+
+                    <!-- visitHour-->
+                    <div class="form-group">
+                        <label class="control-label col-lg-4" for="scheduleHour">{{ 'visit.hour'|trans }}</label>
+
+                        <div class="col-lg-8">
+                            <input class="form-control read-only-on-canceled" type="text" id="scheduleHour"
+                                   name="scheduleHour" value="{{ scheduleHour }}">
+
+                            <p class="help-block">{{ 'input.hour.note'|trans }}</p>
+                        </div>
+                    </div>
+
+                    {% if service is defined %}
+                        <!-- Tecnician -->
+                        <div class="form-group">
+                            <label class="control-label col-lg-4" for="technician">{{ 'technician'|trans }} *</label>
+
+                            <div class="col-lg-8">
+                                <select class="form-control select2 read-only-on-canceled" id="technician" name="technician">
+                                    <option value="0"></option>
+                                    {% for technician in technicians %}
+                                        <option value="{{ technician.id }}"
+                                                {{ (technicianId == technician.id)? ' selected="selected"':'' }}
+                                                >{{ technician.user.fullname }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row text-center">
+                <button type="button" id="registerBtn" class="btn btn-primary removeOnCanceled">{{ 'register.service'|trans }}</button>
+            </div>
+
+        </form>
+    </div>
+</div>

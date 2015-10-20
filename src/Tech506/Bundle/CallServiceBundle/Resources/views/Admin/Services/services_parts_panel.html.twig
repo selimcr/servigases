@@ -1,0 +1,49 @@
+<!-- Service Parts Panel -->
+<div class="panel panel-info">
+    <div class="panel-heading">
+        {{ 'service.parts'|trans }}
+        <button type="button" id="addPartBtn" class="btn btn-primary btn-xs pull-right removeOnCanceled">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>  {{ 'add.part'|trans }}
+        </button>
+    </div>
+    <div class="panel-body">
+
+        <table id="partsTable" class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th>{{ 'name'|trans }}</th>
+                <th>{{ 'sale.price'|trans }}</th>
+                <th>{{ 'real.cost'|trans }}</th>
+                <th>{{ 'technician.cost'|trans }}</th>
+                <th>{{ 'technician.commision'|trans }}</th>
+                <th>{{ 'utility'|trans }}</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for part in service.parts %}
+                <tr class="partRow" id="part-row-{{ loop.index }}" rel="{{ loop.index }}">
+                    <td><input type="text" class="form-control read-only-on-canceled" id="part-name-{{ loop.index }}"
+                               value="{{ part.name }}"></td>
+                    <td><input type="number" class="form-control read-only-on-canceled" id="part-price-{{ loop.index }}"
+                               value="{{ part.fullPrice }}"></td>
+                    <td><input type="number" class="form-control read-only-on-canceled" id="part-cost-real-{{ loop.index }}"
+                               value="{{ part.realCost }}"></td>
+                    <td><input type="number" class="form-control read-only-on-canceled" id="part-cost-{{ loop.index }}"
+                               value="{{ part.technicianCost }}"></td>
+                    <td><input type="number" class="form-control read-only-on-canceled" id="part-commision-{{ loop.index }}"
+                               value="{{ part.technicianCommision }}"></td>
+                    <td><input type="number" class="form-control read-only-on-canceled" id="part-utility-{{ loop.index }}"
+                               value="{{ part.utility }}"></td>
+                    <td><a class="partRemoveIcon" href="#" title="Eliminar" rel="{{ loop.index }}"><i class="glyphicon glyphicon-remove"></i></a></td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <p class="text-center">
+            <button type="button" class="btn btn-primary removeOnCanceled" id="saveLinesBtn">
+                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> {{ 'save.parts'|trans }}
+            </button>
+        </p>
+    </div>
+</div>

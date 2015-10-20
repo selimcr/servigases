@@ -1,0 +1,8 @@
+_secured_area:
+    resource: "@Tech506SecurityBundle/Controller/SecurityController.php"
+    type:     annotation
+
+_admin_account:
+    resource: "@Tech506SecurityBundle/Controller/AccountController.php"
+    type:     annotation
+    prefix:   /admin

@@ -1,0 +1,28 @@
+services:
+    permissions_service:
+         class: Tech506\Bundle\SecurityBundle\Services\PermissionService
+         arguments: ["@security.context", "@router", "@logger", "@doctrine.orm.entity_manager", "@translator", "@session"]
+
+    tecnotek.twig.menu.extension:
+            class: Tech506\Bundle\SecurityBundle\Twig\Extensions\MenuExtension
+            tags:
+                - { name: twig.extension }
+            arguments:
+                em: "@doctrine.orm.entity_manager"
+                translator: "@translator"
+                session: "@session"
+                securityContext: "@security.context"
+                logger: "@logger"
+                router: "@router"
+
+    tecnotek.twig.form.items.extension:
+                class: Tech506\Bundle\SecurityBundle\Twig\Extensions\FormItemsExtension
+                tags:
+                    - { name: twig.extension }
+                arguments:
+                    em: "@doctrine.orm.entity_manager"
+                    translator: "@translator"
+                    session: "@session"
+                    securityContext: "@security.context"
+                    logger: "@logger"
+                    router: "@router"

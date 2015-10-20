@@ -1,0 +1,118 @@
+{% extends 'Tech506CallServiceBundle:Admin:layouts/admin_layout.html.twig' %}
+
+{% block css %}
+    <link href="{{ asset('admin/css/fileinput.min.css') }}" media="all" rel="stylesheet" type="text/css" />
+{% endblock css %}
+
+{% block js %}
+    <script src="{{ asset('admin/js/fileinput.min.js') }}"></script>
+    <script src="{{ asset('admin/js/fileinput_locale_es.js') }}"></script>
+    <script src="{{ asset('admin/js/tech506/tech506_services.js') }}"></script>
+
+    <script type="text/javascript">
+        Tech506.module = "services-change-status";
+        Tech506.UI.urls['manage-service'] = "{{ path('_admin_services_manage') }}";
+        Tech506.UI.translates['confirm-delete-title'] = "{{ 'confirm.cancel.service.title'|trans }}";
+        Tech506.UI.translates['confirm-delete-msg'] = "{{ 'confirm.cancel.service'|trans }}";
+        Tech506.UI.translates['yes'] = "{{ "yes"|trans }}";
+        Tech506.UI.translates['no'] = "{{ "no"|trans }}";
+
+        Tech506.UI.urls['service-change-status'] = "{{ path('_admin_services_change_status'|trans ) }}";
+
+        Tech506.UI.translates['confirm.cancel.service'] = "{{ 'confirm.cancel.service'|trans }}";
+        Tech506.UI.translates['confirm.finalize.service'] = "{{ 'confirm.finalize.service'|trans }}";
+        Tech506.UI.translates['change-status-empty-msg'] = "{{ 'change.status.empty.msg.error'|trans }}"
+        Tech506.UI.translates['enter-change-status-msg'] = "{{ "enter.change.status.msg"|trans }}";
+    </script>
+{% endblock js %}
+
+{% block mainContent %}
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <ol class="breadcrumb">
+                    <li><i class="fa fa-home"></i><a href="{{ path('_admin_home') }}">{{ 'home'|trans }}</a></li>
+                    <li><i class="fa fa-phone"></i><a href="{{ path('_admin_services') }}">{{ 'tech.services'|trans }}</a></li>
+                    <li><i class="fa fa-circle-o-notch"></i>{{ 'Change Status'|trans }}</li>
+                </ol>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <div class="alert alert-info alert-dismissible fade in" role="alert">
+                            {{ 'change.status.services.note'|trans }}
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <!-- Table -->
+                        <table id="services-list" class="table table-striped table-bordered table-hover responsive-utilities jambo_table"
+                               data-toggle="table"
+                               data-height="400"
+                               data-card-view="false">
+                            <thead>
+                            <tr>
+                                <th data-sortable="true">
+                                    {{ '#'|trans }}
+                                </th>
+                                <th class="col-md-3">
+                                    {{ 'information'|trans }}
+                                </th>
+                                <th class="col-md-3">
+                                    {{ 'schedule.information'|trans }}
+                                </th>
+                                <th class="col-md-2">
+                                    {{ 'status'|trans }}
+                                </th>
+                                <th class="col-md-3">
+                                    {{ 'actions'|trans }}
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for service in services %}
+                                <tr id="service-row-{{ service.id }}">
+                                    <td>
+                                        <b><a href="{{ path('_admin_services_manage') }}/{{ service.id }}">{{ service.id }}</a></b>
+                                    </td>
+                                    <td>
+                                        <div class="service-info">
+                                            <p><span>{{ 'seller'|trans }}: </span>{{ service.seller.fullName }}</p>
+                                            <p><span>{{ 'client'|trans }}: </span>{{ service.client }}</p>
+                                            <p><span>{{ 'creation.date'|trans }}: </span>{{ service.creationDate|date('M/d/Y') }}</p>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="service-info">
+                                            <p><span>{{ 'technician'|trans }}: </span>{{ service.technician is not null? service.technician.user.fullName }}</p>
+                                            <p><span>{{ 'visit.date'|trans }}: </span>{{ service.scheduleDate|date('m-d-Y') }}</p>
+                                            <p><span>{{ 'visit.hour'|trans }}: </span>{{ service.hour }}</p>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title=""
+                                                data-original-title="{{ ('service.status.desc.b.'~service.status)|trans|raw }}">
+                                            {{ ('services.status.' ~ service.status)|trans }}</button>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-warning btn-change-status"
+                                                rel="{{ service.id }}" newStatus="3">
+                                            {{ 'cancel'|trans }}</button>
+                                        <button type="button" class="btn btn-primary btn-change-status"
+                                                rel="{{ service.id }}" newStatus="4">
+                                            {{ 'finalize'|trans }}</button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock mainContent %}

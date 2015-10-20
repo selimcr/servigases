@@ -1,0 +1,321 @@
+# General #
+site.title: ServiGases | Sitio Administrativo
+header.title: Centro Diurno Pilar Gamboa
+contact.us: Contáctenos
+services: Servicios
+about.us: Quiénes Somos
+admin.site:
+servigases: ServiGases
+welcome: Bienvenido
+list: Lista
+
+#Admin Site
+username: Nombre de Usuario
+password: Contraseña
+login: Ingresar
+forgot.password: Olvidó su Contraseña
+remember.me: Recuérdame
+bad.credentials: El nombre de usuario y contraseña ingresados no coinciden
+admin.site: Sitio Administrativo
+my.profile: Mi Cuenta
+log.out: Salir
+dashboard: Dashboard
+management: Administración
+
+# Menu
+home: Inicio
+Administrators: Administradores
+Technicians: Técnicos
+Sellers: Asesores
+forms: Mantenimientos
+Calls: Llamadas
+reports: Reportes
+results: Resultados
+Sales: Ventas
+New: Nueva
+Call List: Listar Llamadas
+Schedule Services: Programar
+Services: Servicios
+New Visit: Registrar Venta
+Sales List: Lista de Ventas
+Products: Productos
+Categories: Categorías
+Usuarios: Usuarios
+All: Todos
+Comissions: Comisiones
+Change Status: Cambiar Estado
+Apply: Aplicar
+
+# Actions
+actions: Acciones
+save: Guardar
+reset: Limpiar
+new: Nuevo
+cancel: Cancelar
+edit: Editar
+create: Crear
+delete: Eliminar
+add: Agregar
+change: Cambiar
+find: Buscar
+find.client: Buscar Cliente
+save.client: Guardar Cliente
+schedule: Programar
+clean: Limpiar
+confirm.information: Confirmar Información
+confirm: Confirmar
+finalize: Finalizar
+print: Imprimir
+Register: Registrar
+category: Categoría
+products: Productos
+generate: Generar
+product: Producto
+apply.commissions: Aplicar Comisiones
+apply.user.commissions.title: Aplica las comisiones para este colaborador solamente
+
+confirm.user.commission.application: ¿Está seguro que desea aplicar las comisiones de este Colaborador?
+product.save.success: El producto se ha guardado correctamente
+saving.success: Se ha guardado la información correctamente
+birthdate.note: Ingrese la fecha de nacimiento con el formato dd/MM/YYYY
+input.date.note: Ingrese la fecha con el formato dd/MM/YYYY
+apply.to: Aplicar a
+
+prices.defined: Precios Definidos
+filter.by.category: Filtrar por Categoría
+
+# Fields
+employee: Colaborador
+name: Nombre (s)
+lastname: Apellido (s)
+secondSurname: Segundo Apellido
+birthdate: Fecha Nacimiento
+documentId: Cédula
+neighborhood: Vecindario
+homePhone: Teléfono
+nacionality: Nacionalidad
+admission.date: Fecha Ingreso
+weight: Peso (Kg)
+brachialCircumference: Circunferencia Braquial (CB)
+calfCircumference: Circunferencia Pantorrilla (CP)
+kneeHeight: Altura Rodilla (AR)
+height: Talla (cm)
+description: Descripción
+imc: Indicé de Masa Corporal (IMC)
+nutritional.state: Estado Nutritional
+scholarity: Escolaridad
+address: Dirección
+live.with: Vive Con
+important.phones: Teléfonos Importantes
+civil.status: Estado Civil
+laterality: Lateralidad
+gender: Género
+amount: Monto
+yes: Si
+no: No
+hour: Hora
+men: Hombres
+women: Mujeres
+all: Todos
+total: Total
+participants: Participantes
+email: Correo Electrónico
+cellPhone: Teléfono Cel.
+birthPlace: Lugar de Nacimiento
+identification: Identificación
+identification.type: Tipo de Identificación
+active: Activo
+birthDate: Fecha de Nacimiento
+rh: Tipo de Sangre
+maritalStatus: Estado Civíl
+gender: Género
+gender.male: Masculino
+gender.female: Femenino
+vinculation.date: Fecha de Vinculación
+vinculation.ending.date: Fecha de Desvinculación
+last.uniform.date: Ultima Entrega de Uniformes
+shirt.size: Talla Camisa
+pants.size: Talla Pantalón
+shoes.size: Talla Zapatos
+motorcycle.license.plate: Placa de Moto
+observations: Observaciones
+eps: EPS
+arl: ARL
+compensation.fund: Caja de Compensación
+pension.fund: Fondo de Pensiones
+available.services: Servicios Disponibles
+full.price: Precio Total
+estandar: Estándar
+promo: Promo
+only.on.managing: Sólo al Manejar
+Schedule: Programar
+sale.commision: Comisión Venta
+technician.commision: Comisión Técnico
+phone: Teléfono
+client.information: Información del Cliente
+client.phone.note: Incluya el código de departamento. Ejemplo 43652265
+fullName: Nombre
+New Call: Registar Llamada
+call.detail: Detalle de Llamada
+services.information: Información de Servicios
+response.call: Atiende Llamada
+response.call.help: Si es posible ingrese el nombre de quien atiende la llamada
+register.call: Registrar Llamada
+call.selected.services: Servicios Seleccionados
+find.error.no.data.entered: Debe ingresar al menos uno de los campos para buscar (Teléfono, Celular, Correo Electrónico)
+call.confirm.error.no.client.data: No se puede registrar una llamada sin al menos tener el teléfono del cliente
+call.confirm.error.no.observations: Por favor ingrese observaciones de la llamada antes de guardarla
+dateTime: Fecha y Hora
+seller: Asesor
+client: Cliente
+generate.service: Generó Servicio
+technician: Técnico
+status: Estado
+creation.date: Fecha de Creación
+tech.services: Servicios Técnicos
+schedule.service: Programar Servicio
+service.detail: Detalle de Servicio
+schedule.information: Información de Programación
+only.for.admin: Sólo para Administradores
+important.information: Información Relevante
+reference.point: Punto de Referencia
+reference.point.help: Incluya información relevante para ubicar el lugar de la Visita
+service.observations.help: Incluya información asociada a los elementos a revisar, Marca, estado y otros; además de cualquier otra información relevante para la programación y ejecución del servicio
+service.address.help: Incluya localización exacta
+state: Municipio
+visit.important.information: Información de la Visita
+register.service: Registrar Visita
+manage.service: Administrar Servicio
+visit.date: Fecha de Visita
+service.parts: Repuestos
+save.parts: Guardar Repuestos
+add.part: Agregar Repuesto
+cost: Costo
+sale.price: Precio de Venta
+real.cost: Costo Real
+technician.cost: Costo al Técnico
+utility: Utilidad
+price.type: Tipo de Precio
+service: Servicio
+confirm.cancel.service.title: Cancelar Servicio
+confirm.cancel.service: ¿Está seguro que desea cancelar este servicio? Todos los cambios no guardados se perderán y una vez cancelado no podrá modificarlo y las comisiones no se aplicarán.
+confirm.finalize.service: ¿Está seguro que desea finalizar este servicio? Todos los cambios no guardados se perderán y una vez finalizado no podrá modificarlo y las comisiones de este servicio se aplicarán para Asesores y Técnicos
+information.save.success: Se ha guardado la informacion correctamente
+address.detail.help: Ingrese la información del barrio, urbanización, unidad, apartamento u otros
+address.detail: Detalle de Dirección
+visit.hour: Hora de Visita
+input.hour.note: Ingrese la hora con el formato HH:MM AM, por ejemplo "03:00 PM" ó "09:30 AM"
+assign.sale.to: Asignar venta
+products.categories: Categorías de Productos
+seller.win: Comisión Asesor
+technician.win: Comisión Técnico
+transportation.cost: Costo Transporte
+prices: Precios
+home.phone: Teléfono Fijo
+cell.phone: Teléfono Celular
+add.service: Agregar Servicio
+total.amount: Monto Total
+select.service: Seleccione el servicio
+confirm.delete.service: ¿Está seguro que desea eliminar este servicio?
+edit.service: Editar Servicio
+save.services: Guardar Servicios
+information: Información
+schedule.information: Información de Programación
+
+# Reports
+Daily Schedule: Programación Diaria
+report.daily.schedule: Muestra la lista de servicios progrados en una fecha específica, agrupando la información por Técnico
+
+# Identification Types
+identification.type.1: Nacional
+identification.type.2: Extranjería
+
+#Marital Status
+marital.status.1: Soltero(a)
+marital.status.2: Unión Libre
+marital.status.3: Casado(a)
+marital.status.4: Divorciado(a)
+marital.status.5: Viudo(a)
+
+#Services Status
+services.status.1: Creado
+services.status.2: Programado
+services.status.3: Cancelado
+services.status.4: Realizado
+services.status.5: Comisionado
+
+service.status.desc.1: En este estado el servicio puede modificarse y ser reasignado a un técnico; <b>para cambiarlo a estado "Programado"</b>, debe en el panel "Información de Visita" seleccionar el técnico y la fecha de la visita. También podrá cancelarlo utilizando el botón de abajo, una vez cancelado no podrá modificarlo y las comisiones no serán aplicadas ni a los Asesores o Técnicos.
+service.status.desc.2: En este estado el servicio puede modificarse y ser reasignado a un técnico, o cancelarse; además de que una vez realizado el servicio puede utilizando el botón de abajo cambiar el estado a "Realizado"; <b>sólo los servicios en el estado "Realizado" se incluirán en las liquidaciones de Asesores y Técnicos</b>.
+service.status.desc.3: Este servicio fue cancelado; no se puede modificar o cambiar de estado y las comisiones a Asesores o Técnicos no serán aplicados
+service.status.desc.4: Este servicio fue finalizado; no se puede modificar la información o cambiar de estado desde esta página; las comisiones se aplicarán para Asesores y Técnicos y una vez aplicados este servicio cambiará de estado a "Comisionado".
+
+service.status.desc.b.1: En este estado el servicio puede modificarse y ser reasignado a un técnico; para cambiarlo a estado Programado. También podrá cancelarlo utilizando el botón, una vez cancelado no podrá modificarlo y las comisiones no serán aplicadas ni a los Asesores o Técnicos.
+service.status.desc.b.2: En este estado el servicio puede modificarse y ser reasignado a un técnico, o cancelarse; además de que una vez realizado el servicio puede utilizando el botón cambiar el estado a Realizado; sólo los servicios en el estado Realizado se incluirán en las liquidaciones de Asesores y Técnicos.
+service.status.desc.b.3: Este servicio fue cancelado; no se puede modificar o cambiar de estado y las comisiones a Asesores o Técnicos no serán aplicadas
+service.status.desc.b.4: Este servicio fue finalizado; no se puede modificar la información; las comisiones se aplicarán para Asesores y Técnicos y una vez aplicados este servicio cambiará de estado a Comisionado.
+
+# Dashboard
+older.adults.age.ranges: Cantidad Adultos Mayores por Rango de Edades
+years.ranges: Rango Años
+
+#Validations
+review.and.fix.fields: Por favor revise y corrija los siguientes errores antes de guardar
+validation.not.empty: Este campo es requerido y no puede estar vacío
+validation.not.found: El objeto no fue encontrado
+validation.only.digits: Este campo sólo puede contener dígitos
+validation.not.integer: El valor debe ser un entero y debe contener sólo números y sin decimales
+
+#Users
+users: Usuarios
+permissions: Permisos
+select.user.to.review.permissions: Seleccione un Usuario de la lista para administrar sus permisos
+menu.options: Opciones de Menú
+user.username.and.email.must.be.uniques: El nombre de usuario o el email ya se encuentran registrado, por favor intente cambiarlos y probar nuevamente
+save.menu.options: Guardar Opciones de Menú
+save.permissions: Guardar Permisos
+administrator.save.success: La información del Administrador fue guardada correctamente
+technician.save.success: La información del Técnico fue guardada correctamente
+seller.save.success: La información del Asesor(a) fue guardada correctamente
+user.info.main: Información Cuenta
+user.info.employee: Información Empleado
+price.save.success: El precio se ha guardado correctamente
+service.save.success: El servicio se ha guardado correctamente
+
+#Menu and Permissions Translations
+List: Lista
+Results: Resultados
+Reports: Reportes
+
+write.your.message: Escribe tu mensaje
+contact.support: Contactar al Administrador
+error.page.contact.message: Si lo desea por favor notificarnos de este error
+return.to.web.site: Volver a la página inicial
+return.to.admin.site: Volver al sitio administrativo
+
+error.message: Upps, algo ha salido mal; por favor enviarnos un mensaje con los pasos realizados que generaron esta situación para trabajar en ello cuanto antes
+error.404.message: La página o el recurso que está buscando no existe
+error.500.message: Upps, algo inesperado ha ocurrido; por favor enviarnos un mensaje con los pasos realizados que generaron esta situación para trabajar en ello cuanto antes
+error.403.message: No está autorizado para ver la página o el recurso solicitado o ejecutar la acción solitada; si considera que esto es un error por favor enviarnos un mensaje con la situación presentada y el por qué considera que debe ser permitiada
+
+#My Account
+my.details: Detalles de mi cuenta
+messages: Mensajes
+edit.profile: Editar mi cuenta
+account.update.success: La información de la cuenta fue actualizada correctamente
+current.password: Password Actual
+new.password: Nuevo Password
+confirm.password: Confirmación
+password.confirm.error: El password y su confirmación son distintos
+password.lenght.error: El password debe tener entre 6 y 8 caracteres
+account.update.password.success: Su password fue cambiado correctamente y será requerido la próxima vez que intente ingresar al sistema
+current.password.error: Su password actual no corresponde
+change.password: Cambiar Password
+update.account.info: Actualizar Información
+
+product.category.save.success: Se ha guardado correctamente la categoría
+
+schedule.services.note: Esta es la lista de los servicios creados y programados que pueden ser modificados; seleccione el técnico a asignar, la fecha y la hora de la programación; la información será guardada automáticamente
+change.status.services.note: Esta es la lista de los servicios creados y programados que pueden ser modificados; de acuerdo a si el servicio se realizó o no puede cambiar el estado e ingresar un mensaje motivando el cambio
+send.today.schedule.email: Enviar programación del día por correo
+change.status.empty.msg.error: Debe ingresar un mensaje justificando el cambio de estado
+enter.change.status.msg: Ingrese un mensaje justificando el cambio

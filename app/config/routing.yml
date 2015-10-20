@@ -1,0 +1,11 @@
+tech506_call_service:
+    resource: "@Tech506CallServiceBundle/Resources/config/routing.yml"
+    prefix:   /
+
+tech506_security:
+    resource: "@Tech506SecurityBundle/Resources/config/routing.yml"
+    prefix:   /
+
+tecnotek_asilo:
+    resource: "@TecnotekAsiloBundle/Resources/config/routing.yml"
+    prefix:   /

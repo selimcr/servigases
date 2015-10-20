@@ -1,0 +1,99 @@
+{% if service is defined %}
+    {% set stateId = service.state %}
+    {% set selectedSellerId = service.seller.id %}
+    {% set neighborhood = service.neighborhood %}
+    {% set addressLocation = service.address %}
+    {% set addressDetail = service.addressDetail %}
+    {% set referencePoint = service.referencePoint %}
+    {% set observations = service.observations %}
+    {% set scheduleDate = service.scheduleDate|date('Y-m-d') %}
+    {% set scheduleHour = service.hour %}
+{% else %}
+    {% set stateId = 0 %}
+    {% set selectedSellerId = sellerId %}
+    {% set neighborhood = "" %}
+    {% set addressLocation = "" %}
+    {% set addressDetail = "" %}
+    {% set referencePoint = "" %}
+    {% set observations = "" %}
+    {% set scheduleDate = "" %}
+    {% set scheduleHour = "" %}
+{% endif %}
+<!-- Services Panel -->
+<div class="panel panel-info">
+    <div class="panel-heading">
+        {{ 'services.information'|trans }}
+        <button type="button" id="addServiceBtn" class="btn btn-primary btn-xs pull-right removeOnCanceled">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>  {{ 'add.service'|trans }}
+        </button>
+    </div>
+    <div class="panel-body">
+        {% set totalAmount = 0 %}
+        {% if service is defined %}
+            <table id="servicesTable" class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>{{ 'service'|trans }}</th>
+                    <th>{{ 'amount'|trans }}</th>
+                    <th>{{ 'seller.win'|trans }}</th>
+                    <th>{{ 'technician.win'|trans }}</th>
+                    <th>{{ 'transportation.cost'|trans }}</th>
+                    <th>{{ 'utility'|trans }}</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for detail in service.details %}
+                    {% set totalAmount = totalAmount + detail.fullPrice %}
+                    <tr class="service-row" id="service-row-{{ loop.index }}"
+                            rel="{{ detail.id ~ '/' ~ detail.productSaleType.product.id ~ '/' ~ detail.productSaleType.id
+                             ~ '/' ~ detail.fullPrice ~ '/' ~ detail.sellerWin ~ '/' ~ detail.technicianWin ~ '/' ~ detail.transportationCost
+                             ~ '/' ~ detail.utility ~ '/' ~ detail.observations }}">
+                        <td>{{ detail.productSaleType.product }} [{{ detail.productSaleType.name }}]</td>
+                        <td>{{ detail.fullPrice|renderMoney }}</td>
+                        <td>{{ detail.sellerWin|renderMoney }}</td>
+                        <td>{{ detail.technicianWin|renderMoney }}</td>
+                        <td>{{ detail.transportationCost|renderMoney }}</td>
+                        <td>{{ detail.utility|renderMoney }}</td>
+                        <td>
+                            <button type="button" class="btn btn-primary btn-xs edit-service-btn removeOnCanceled" amount="0" rel="{{ loop.index }}">
+                                <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>{{ 'edit'|trans }}
+                            </button>
+                            <button type="button" class="btn btn-primary btn-xs delete-service-btn removeOnCanceled" amount="{{ detail.fullPrice }}" rel="{{ loop.index }}">
+                                <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>{{ 'delete'|trans }}
+                            </button>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <table id="servicesTable" class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>{{ 'service'|trans }}</th>
+                    <th>{{ 'amount'|trans }}</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        {% endif %}
+
+        <p class="text-right">
+            <b>{{ 'total.amount'|trans }}:</b><span id="totalAmount">{{ totalAmount|renderMoney }}</span>
+        </p>
+
+        {% if service is defined %}
+            <p class="text-center">
+                <button type="button" class="btn btn-primary removeOnCanceled" id="save-service-list-btn">
+                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> {{ 'save.services'|trans }}
+                </button>
+            </p>
+        {% endif %}
+    </div>
+</div>
+<script>
+    var totalAmount = {{ totalAmount }};
+</script>

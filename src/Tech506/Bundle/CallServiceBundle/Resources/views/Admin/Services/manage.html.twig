@@ -1,0 +1,137 @@
+{% extends 'Tech506CallServiceBundle:Admin:layouts/admin_layout.html.twig' %}
+
+{% block js %}
+    <script src="{{ asset('admin/js/tech506/tech506_services.js') }}"></script>
+    <script src="{{ asset('admin/js/tech506/tech506_register.js') }}"></script>
+
+    <script type="text/javascript">
+        Tech506.showPleaseWait();
+        Tech506.module = "services-schedule";
+        Tech506.UI.vars['is-managin'] = true;
+        Tech506.UI.vars["services-total-amount"] = totalAmount;
+        Tech506.UI.vars["id"] = {{ app.user.id }};
+        Tech506.UI.vars["status"] = {{ service.status }};
+        Tech506.UI.urls['service-rows-save'] = "{{ path('_admin_services_rows_save') }}";
+        Tech506.UI.urls['load-services'] = "{{ path('_admin_products_services_load') }}";
+        Tech506.UI.urls['load-prices'] = "{{ path('_admin_products_services_prices_load') }}";
+        Tech506.UI.urls['schedule-service'] = "{{ path('_admin_services_schedule_do') }}";
+        Tech506.UI.urls['service-save-parts'] = "{{ path('_admin_services_save_parts') }}";
+        Tech506.UI.urls['service-change-status'] = "{{ path('_admin_services_change_status'|trans ) }}";
+        Tech506.UI.vars["partsTotal"] = {{ service.parts|length  }};
+        Tech506.UI.translates['confirm.cancel.service'] = "{{ 'confirm.cancel.service'|trans }}";
+        Tech506.UI.translates['confirm.finalize.service'] = "{{ 'confirm.finalize.service'|trans }}";
+
+        Tech506.UI.translates['find-error-no-filters'] = "{{ 'find.error.no.data.entered'|trans }}";
+        Tech506.UI.translates['call-confirm-error-no-client'] = "{{ 'call.confirm.error.no.client.data'|trans }}";
+        Tech506.UI.translates['call-confirm-error-no-observations'] = "{{ 'call.confirm.error.no.observations'|trans }}";
+        Tech506.UI.translates['confirm-delete-service'] = "{{ 'confirm.delete.service'|trans }}";
+
+        Tech506.UI.translates['services-status-1'] = "{{ 'services.status.1'|trans }}";
+        Tech506.UI.translates['services-status-2'] = "{{ 'services.status.2'|trans }}";
+        Tech506.UI.translates['services-status-3'] = "{{ 'services.status.3'|trans }}";
+        Tech506.UI.translates['services-status-4'] = "{{ 'services.status.4'|trans }}";
+        Tech506.UI.translates['services-status-5'] = "{{ 'services.status.5'|trans }}";
+
+        Tech506.UI.translates['services-status-desc-1'] = '{{ 'service.status.desc.1'|trans|raw }}';
+        Tech506.UI.translates['services-status-desc-2'] = '{{ 'service.status.desc.2'|trans|raw }}';
+        Tech506.UI.translates['services-status-desc-3'] = '{{ 'service.status.desc.3'|trans|raw }}';
+        Tech506.UI.translates['services-status-desc-4'] = '{{ 'service.status.desc.4'|trans|raw }}';
+        Tech506.UI.translates['services-status-desc-5'] = '{{ 'service.status.desc.5'|trans|raw }}';
+    </script>
+{% endblock js %}
+
+{% block mainContent %}
+    <!--overview start-->
+    <div class="row">
+        <div class="col-lg-12">
+            <h3 class="page-header">
+                <i class="glyphicon glyphicon-calendar"></i> {{ 'manage.service'|trans }}:  <b>#{{ service.id }}</b>
+            </h3>
+            <ol class="breadcrumb">
+                <li><i class="fa fa-home"></i><a href="{{ path('_admin_home') }}">{{ 'home'|trans }}</a></li>
+                <li><i class="glyphicon glyphicon-wrench"></i><a href="{{ path('_admin_services') }}">{{ 'tech.services'|trans }}</a></li>
+                <li><i class="glyphicon glyphicon-calendar"></i>{{ 'manage.service'|trans }}</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6 col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{ 'client.information'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    <form class="form-horizontal">
+                        <div class="row">
+                            <div class="col-lg-12 col-sm-12">
+                                <p><span>{{ 'phone'|trans }}: </span>
+                                    <b id="phoneLabel">{{ service.client.phone }}</b></p>
+                                <p><span>{{ 'fullName'|trans }}: </span><b id="fullNameLabel">{{ service.client.fullname }}</b></p>
+                                <p><span>{{ 'cellPhone'|trans }}: </span>
+                                    <b id="identificationLabel">{{ service.client.cellPhone }}</b></p>
+                                <p><span>{{ 'email'|trans }}: </span><b id="emailLabel">{{ service.client.email }}</b></p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{ 'status'|trans }}:
+                        <b id="status-label">{{ ('services.status.'~service.status)|trans }}</b></h3>
+                </div>
+                <div class="panel-body">
+                    <p id="status-desc-label">{{ ('service.status.desc.'~service.status)|trans|raw }}</p>
+                    {% if service.status == 1 %}
+                        <button type="button" id="cancelButton" class="btn btn-warning removeOnCanceled">{{ 'cancel'|trans }}</button>
+                        <button type="button" id="finalizeButton" class="btn btn-primary removeOnCanceled hide">{{ 'finalize'|trans }}</button>
+                    {% else %}
+                        {% if service.status == 2 %}
+                            <button type="button" id="cancelButton" class="btn btn-warning removeOnCanceled">{{ 'cancel'|trans }}</button>
+                            <button type="button" id="finalizeButton" class="btn btn-primary removeOnCanceled">{{ 'finalize'|trans }}</button>
+                        {% else %}
+                            {% if service.status == 3 %}
+                                <div class="alert alert-warning alert-dismissible fade in" role="alert">
+                                    {{ service.resultMsg }}
+                                </div>
+                            {% else %}
+
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-sm-12">
+            <input type="hidden" id="serviceId" name="serviceId" value="{{ id }}">
+            {% include 'Tech506CallServiceBundle:Admin:Services/visit_info_form.html.twig' with {'selectedSellerId':service.seller.id} %}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-sm-12">
+            <!-- Services Panel -->
+            {% include 'Tech506CallServiceBundle:Admin:Services/services_panel.html.twig' %}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-sm-12">
+            <!-- Services Panel -->
+            {% include 'Tech506CallServiceBundle:Admin:Services/services_parts_panel.html.twig' %}
+        </div>
+    </div>
+{% endblock mainContent %}
+
+{% block bodyModals %}
+    {% include 'Tech506CallServiceBundle:Admin:Services/add_service_modal.html.twig'  with {'onManaging': true}  %}
+
+    {% include 'Tech506CallServiceBundle:Admin:Services/edit_service_modal.html.twig'  with {'onManaging': true}  %}
+{% endblock bodyModals %}

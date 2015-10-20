@@ -1,0 +1,121 @@
+{% extends 'Tech506CallServiceBundle:Admin:layouts/admin_layout.html.twig' %}
+
+{% block css %}
+    <link href="{{ asset('admin/css/fileinput.min.css') }}" media="all" rel="stylesheet" type="text/css" />
+{% endblock css %}
+
+{% block js %}
+    <script src="{{ asset('admin/js/fileinput.min.js') }}"></script>
+    <script src="{{ asset('admin/js/fileinput_locale_es.js') }}"></script>
+    <script src="{{ asset('admin/js/tech506/tech506_users.js') }}"></script>
+
+    <script type="text/javascript">
+        Tech506.module = "users-list";
+        Tech506.UI.vars["avatars-path"] = "{{ asset('uploads/avatars/') }}";
+        Tech506.UI.translates["edit"] = "{{ 'edit'|trans }}";
+        Tech506.UI.translates['field.not.empty'] = "{{ 'validation.not.empty'|trans }}";
+        Tech506.UI.translates['confirm-delete'] = "{{ 'confirm.catalog.delete'|trans }}";
+        Tech506.UI.urls['save'] = "{{ path('_admin_users_save') }}";
+        Tech506.UI.urls['saveAvatar'] = "{{ path('_admin_users_save_avatar') }}";
+        Tech506.UI.urls['delete'] = "{{ path('_admin_users_delete') }}";
+        Tech506.UI.vars['default-avatar-url'] = "{{ asset('admin/img/default_avatar_male.jpg') }}";
+    </script>
+{% endblock js %}
+
+{% block mainContent %}
+
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <ol class="breadcrumb">
+                    <li><i class="fa fa-home"></i><a href="{{ path('_admin_home') }}">{{ 'home'|trans }}</a></li>
+                    <li><i class="fa fa-users"></i>{{ 'Administrators'|trans }}</li>
+                </ol>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>{{ 'Administrators'|trans }} <small>{{ 'list'|trans }}</small></h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div id="custom-toolbar">
+                            <div class="form-inline" role="form">
+                                <button type="button" id="btn-new" class="btn btn-primary" ref="0" data-toggle="modal"
+                                        data-target="#form-content" title="{{ 'create'|trans }}">{{ 'new'|trans }}</button>
+                            </div>
+                        </div>
+                        <table id="catalog-list" class="table table-striped responsive-utilities jambo_table"
+                               data-toolbar="#custom-toolbar"
+                               data-toggle="table"
+                               data-url="{{ path('_admin_administrators_list') }}"
+                               data-side-pagination="server"
+                               data-card-view="false"
+                               data-show-refresh="true" data-show-columns="true"
+                               data-search="true" data-select-item-name="toolbar1"
+                               data-pagination="true"
+                               data-page-list="[10, 25, 50, 100]"
+                               data-sort-name="name"
+                               data-sort-order="asc">
+                            <thead>
+                            <tr class="headings">
+                                <th data-field="name" data-sortable="true">
+                                    {{ 'name'|trans }}
+                                </th>
+                                <th data-field="lastname" data-sortable="true">
+                                    {{ 'lastname'|trans }}
+                                </th>
+                                <th data-field="username" data-sortable="true">
+                                    {{ 'username'|trans }}
+                                </th>
+                                <th data-field="email" data-sortable="true">
+                                    <i class="glyphicon glyphicon-envelope"></i>
+                                    {{ 'email'|trans }}
+                                </th>
+                                <th data-field="cellPhone" data-sortable="true">
+                                    <i class="glyphicon glyphicon-phone"></i>
+                                    {{ 'cellPhone'|trans }}
+                                </th>
+                                <th data-field="isActive" data-sortable="true" class="col-md-2"
+                                    data-formatter="Tech506.Users.List.yesNoFormat">
+                                    {{ 'active'|trans }}
+                                </th>
+                                <th class=" no-link last" data-field="operate" data-card-visible="false" data-searchable="false"
+                                    data-formatter="Tech506.Users.List.operateFormatter"
+                                    data-events="Tech506.Users.List.operateEvents">
+                                    <span class="nobr">{{ 'actions'|trans }}</span></th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock mainContent %}
+
+{% block bodyModals %}
+    <div id="form-content" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog form-modal">
+            <form class="form-horizontal" id="form-catalog" enctype="multipart/form-data">
+                <input type="hidden" id="id" name="id" value="0">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 id="panel-catalog-title">{{ 'create'|trans }}</h3>
+                    </div>
+                    <div class="modal-body">
+                        {{ include('Tech506CallServiceBundle:Admin:Users/user_form.html.twig') }}
+                    </div>
+                    <div class="modal-footer">
+                        <input class="btn btn-success" type="submit" value="{{ 'save'|trans }}">
+                        <a href="#" class="btn" data-dismiss="modal">{{ 'cancel'|trans }}</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock bodyModals %}

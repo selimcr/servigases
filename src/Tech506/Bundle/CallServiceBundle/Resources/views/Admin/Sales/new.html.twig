@@ -1,0 +1,88 @@
+{% extends 'Tech506CallServiceBundle:Admin:layouts/admin_layout.html.twig' %}
+
+{% block js %}
+    <script src="{{ asset('admin/js/tech506/tech506_sales_OBSOLETE.js') }}"></script>
+
+    <script type="text/javascript">
+        Tecnotek.module = "sale-new";
+        Tecnotek.UI.vars["id"] = {{ app.user.id }};
+        Tecnotek.UI.translates["edit"] = "{{ 'edit'|trans }}";
+        Tecnotek.UI.urls['update-account'] = "{{ path('_admin_account_update') }}";
+        Tecnotek.UI.translates['password.confirm.not.same'] = "{{ 'password.confirm.error'|trans }}";
+        Tecnotek.UI.translates['password.lenght.error'] = "{{ 'password.lenght.error'|trans }}";
+        Tecnotek.UI.urls['update-password'] = "{{ path('_admin_account_update_password') }}";
+    </script>
+{% endblock js %}
+
+{% block mainContent %}
+    <!--overview start-->
+    <div class="row">
+        <div class="col-lg-12">
+            <h3 class="page-header"><i class="fa fa-star-o"></i> {{ 'Sales'|trans }}</h3>
+            <ol class="breadcrumb">
+                <li><i class="fa fa-home"></i><a href="{{ path('_admin_home') }}">{{ 'home'|trans }}</a></li>
+                <li><i class="fa fa-star-o"></i>{{ 'Sales'|trans }}</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+
+            <!-- Available Services -->
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading">{{ 'available.services'|trans }}</div>
+
+                <!-- Table -->
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th rowspan="2" class="text-center">{{ 'name'|trans }}</th>
+                            <th colspan="3" class="text-center">{{ 'estandar'|trans }}</th>
+                            <th colspan="3" class="text-center">{{ 'promo'|trans }}</th>
+                        </tr>
+                        <tr>
+                            <th class="text-center">{{ 'full.price'|trans }}</th>
+                            <th class="text-center">{{ 'sale.commision'|trans }}</th>
+                            <th class="text-center">{{ 'technician.commision'|trans }}</th>
+
+                            <th class="text-center">{{ 'full.price'|trans }}</th>
+                            <th class="text-center">{{ 'sale.commision'|trans }}</th>
+                            <th class="text-center">{{ 'technician.commision'|trans }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Calentador</td>
+                            <td>#</td>
+                            <td>#</td>
+                            <td>#</td>
+                            <td>#</td>
+                            <td>#</td>
+                            <td>#</td>
+                        </tr>
+                        <tr>
+                            <td>Estufa</td>
+                            <td>#</td>
+                            <td>#</td>
+                            <td>#</td>
+                            <td>#</td>
+                            <td>#</td>
+                            <td>#</td>
+                        </tr>
+                        <tr>
+                            <td>Combo 2</td>
+                            <td>#</td>
+                            <td>#</td>
+                            <td>#</td>
+                            <td>#</td>
+                            <td>#</td>
+                            <td>#</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock mainContent %}

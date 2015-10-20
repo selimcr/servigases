@@ -1,0 +1,167 @@
+<div class="row">
+    <div class="col-lg-4 col-md-12">
+
+        <input id="avatar" name="avatar" type="file" class="file-loading">
+
+    </div>
+
+    <div class="col-lg-8 col-md-12">
+        <!-- Username -->
+        <div class="form-group">
+            <label class="control-label col-lg-4" for="username">{{ 'username'|trans }} *</label>
+            <div class="col-lg-8 has-feedback">
+                <input type="text" class="form-control" id="username" name="username"
+                       required="required" maxlength="250">
+                <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+            </div>
+        </div>
+
+        <!-- Name -->
+        <div class="form-group">
+            <label class="control-label col-lg-4" for="name">{{ 'name'|trans }} *</label>
+            <div class="col-lg-8 has-feedback">
+                <input type="text" class="form-control" id="name" name="name" required="required"
+                       maxlength="250">
+                <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+            </div>
+        </div>
+
+        <!-- LastName -->
+        <div class="form-group">
+            <label class="control-label col-lg-4" for="lastname">{{ 'lastname'|trans }} *</label>
+            <div class="col-lg-8 has-feedback">
+                <input type="text" class="form-control" id="lastname" name="lastname"
+                       required="required" maxlength="250">
+                <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+            </div>
+        </div>
+
+        <!-- gender -->
+        <div class="form-group">
+            <label class="control-label col-lg-4" for="gender">{{ 'gender'|trans }}</label>
+            <div class="col-lg-8">
+                {{ renderGenderSelect()|raw }}
+            </div>
+        </div>
+
+        <!-- isActive -->
+        <div class="form-group">
+            <label class="control-label col-lg-4" for="isActive">{{ 'active'|trans }}</label>
+            <div class="col-lg-8">
+                <input type="checkbox" class="form-control" id="isActive" name="isActive">
+            </div>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-lg-6 col-md-12">
+        <!-- IdentificationType -->
+        <div class="form-group">
+            <label class="control-label col-lg-4" for="identificationType">{{ 'identification.type'|trans }} *</label>
+            <div class="col-lg-8">
+                {{ renderIdentificationTypesSelect()|raw }}
+            </div>
+        </div>
+
+        <!-- Identification -->
+        <div class="form-group">
+            <label class="control-label col-lg-4" for="identification">{{ 'identification'|trans }} *</label>
+            <div class="col-lg-8">
+                <input type="text" class="form-control" id="identification" name="identification" required="required"
+                       maxlength="100">
+            </div>
+        </div>
+
+        <!-- birthPlace -->
+        <div class="form-group">
+            <label class="control-label col-lg-4" for="birthPlace">{{ 'birthPlace'|trans }}</label>
+            <div class="col-lg-8">
+                <input type="text" class="form-control" id="birthPlace" name="birthPlace" maxlength="100">
+            </div>
+        </div>
+
+        <!-- birthDate -->
+        <div class="form-group">
+            <label class="control-label col-lg-4" for="birthDate">{{ 'birthDate'|trans }}</label>
+            <div class="col-lg-8">
+                <input class="form-control" type="date" id="birthDate" name="birthDate" value="">
+
+                <p class="help-block">{{ 'birthdate.note'|trans }}</p>
+            </div>
+        </div>
+
+        <!-- RH -->
+        <div class="form-group">
+            <label class="control-label col-lg-4" for="rh">{{ 'rh'|trans }}</label>
+            <div class="col-lg-8">
+                {{ renderRHSelect()|raw }}
+            </div>
+        </div>
+
+        <!-- Marital Status -->
+        <div class="form-group">
+            <label class="control-label col-lg-4" for="maritalStatus">{{ 'maritalStatus'|trans }}</label>
+
+            <div class="col-lg-8">
+                {{ renderMaritalStatusSelect()|raw }}
+            </div>
+        </div>
+
+    </div>
+    <div class="col-lg-6 col-md-12">
+        <!-- Email -->
+        <div class="form-group">
+            <label class="control-label col-lg-4" for="email">{{ 'email'|trans }} *</label>
+
+            <div class="col-lg-8 has-feedback">
+                <input type="text" class="form-control" id="email" name="email" required="required"
+                       maxlength="250">
+                <span class="fa fa-envelope form-control-feedback right" aria-hidden="true"></span>
+            </div>
+        </div>
+
+        <!-- homePhone -->
+        <div class="form-group">
+            <label class="control-label col-lg-4" for="homePhone">{{ 'homePhone'|trans }}</label>
+
+            <div class="col-lg-8 has-feedback">
+                <input type="text" class="form-control" id="homePhone" name="homePhone"
+                       maxlength="100">
+                <span class="fa fa-phone form-control-feedback right" aria-hidden="true"></span>
+            </div>
+        </div>
+
+        <!-- cellPhone -->
+        <div class="form-group">
+            <label class="control-label col-lg-4" for="cellPhone">{{ 'cellPhone'|trans }} *</label>
+
+            <div class="col-lg-8 has-feedback">
+                <input type="text" class="form-control" id="cellPhone" name="cellPhone"
+                       required="required" maxlength="250">
+                <span class="fa fa-phone form-control-feedback right" aria-hidden="true"></span>
+            </div>
+        </div>
+
+        <!-- Neighborhood -->
+        <div class="form-group">
+            <label class="control-label col-lg-4" for="neighborhood">{{ 'neighborhood'|trans }}</label>
+
+            <div class="col-lg-8">
+                <input type="text" class="form-control" id="neighborhood" name="neighborhood"
+                       maxlength="100">
+            </div>
+        </div>
+
+        <!-- Address -->
+        <div class="form-group">
+            <label class="control-label col-lg-4" for="address">{{ 'address'|trans }}</label>
+
+            <div class="col-lg-8">
+                <textarea class="form-control" id="address" name="address"></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+
+

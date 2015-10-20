@@ -1,0 +1,114 @@
+{% extends 'Tech506CallServiceBundle:Admin:layouts/admin_layout.html.twig' %}
+
+{% block css %}
+    <link href="{{ asset('admin/css/fileinput.min.css') }}" media="all" rel="stylesheet" type="text/css" />
+{% endblock css %}
+
+{% block js %}
+    <script src="{{ asset('admin/js/fileinput.min.js') }}"></script>
+    <script src="{{ asset('admin/js/fileinput_locale_es.js') }}"></script>
+    <script src="{{ asset('admin/js/tech506/tech506_reports.js') }}"></script>
+
+    <script type="text/javascript">
+        Tech506.module = "report-daily-schedule";
+        Tech506.UI.urls['manage-service'] = "{{ path('_admin_services_manage') }}";
+    </script>
+{% endblock js %}
+
+{% block mainContent %}
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <ol class="breadcrumb">
+                    <li><i class="fa fa-home"></i><a href="{{ path('_admin_home') }}">{{ 'home'|trans }}</a></li>
+                    <li><i class="fa fa-file-pdf-o"></i>{{ 'Reports'|trans }}</li>
+                    <li>{{ 'Daily Schedule'|trans }}</li>
+                </ol>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title no-print">
+                        <div class="alert alert-info alert-dismissible fade in" role="alert">
+                            {{ 'report.daily.schedule'|trans }}
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="row no-print">
+                            <form class="form-horizontal" action="{{ path('_admin_reports_daily_schedule') }}" method="post">
+                                <div class="col-lg-4 col-sm-12 form-group">
+                                    <label class="control-label col-lg-4  col-sm-12" for="technician">{{ 'technician'|trans }} *</label>
+                                    <div class="col-lg-8 col-sm-12">
+                                        <select class="form-control" id="technician" name="technician">
+                                            <option value="0">{{ 'all'|trans }}</option>
+                                            {% for technician in technicians %}
+                                                <option value="{{ technician.id }}"
+                                                        {{ (technicianId == technician.id)? ' selected="selected"':'' }}
+                                                        >{{ technician.user.fullname }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-sm-12 form-group">
+                                    <label class="control-label col-lg-4  col-sm-12" for="visitDate">{{ 'visit.date'|trans }} *</label>
+                                    <div class="col-lg-8 col-sm-12">
+                                        <input id="visitDate" name="visitDate" class="form-control service-control"
+                                               type="text" value="{{ visitDate }}">
+                                        <small>{{ 'input.date.note'|trans }}</small>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-sm-12 form-group">
+                                    <button type="submit" class="btn btn-primary no-print">{{ 'generate'|trans }}</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="row printable">
+                            {% for technician in services %}
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="x_panel">
+                                        <div class="x_title">
+                                            <h2>
+                                                <b>{{ technician['technician'].user.fullName }}</b>
+                                                <small>
+                                                | Tel. {{ technician['technician'].user.cellPhone }}
+                                                | Email. {{ technician['technician'].user.email }}
+                                                </small>
+                                            </h2>
+                                            <ul class="nav navbar-right panel_toolbox">
+                                                <li>
+                                                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" onclick="window.print();" title="{{ 'print'|trans }}"><i class="glyphicon glyphicon-print"></i></a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" onclick="window.print();" title="{{ 'send.today.schedule.email'|trans }}">
+                                                        <i class="glyphicon glyphicon-envelope"></i></a>
+                                                </li>
+                                            </ul>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="x_content">
+                                            {% set serviceIndex = 1 %}
+                                            <ul class="list-unstyled timeline">
+                                            {% for service in technician['services'] %}
+                                                {{ renderServiceScheduleBox(service, serviceIndex)|raw }}
+                                                {% set serviceIndex = serviceIndex + 1 %}
+                                            {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock mainContent %}

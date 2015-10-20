@@ -1,0 +1,72 @@
+<div id="edit-services-container" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog form-modal">
+        <form class="form-horizontal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    {{ 'edit.service'|trans }}
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12">
+                            <form class="form-horizontal" id="edit-service-form">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <!-- Description -->
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4" for="description">{{ 'description'|trans }} *</label>
+
+                                            <div class="col-lg-8">
+                                                <textarea class="form-control" id="description" name="description"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <!-- Full Price -->
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4" for="fullPrice">{{ 'full.price'|trans }} *</label>
+                                            <div class="col-lg-8">
+                                                <input type="number" class="form-control" id="fullPrice" name="fullPrice" required="required">
+                                            </div>
+                                        </div>
+                                        <!-- Seller Win -->
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4" for="sellerWin">{{ 'seller.win'|trans }} *</label>
+                                            <div class="col-lg-8 has-feedback">
+                                                <input type="number" class="form-control" id="sellerWin" name="sellerWin" required="required">
+                                            </div>
+                                        </div>
+                                        <!-- Technician Win -->
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4" for="technicianWin">{{ 'technician.win'|trans }} *</label>
+                                            <div class="col-lg-8">
+                                                <input type="number" class="form-control" id="technicianWin" name="technicianWin" required="required">
+                                            </div>
+                                        </div>
+                                        <!-- Transport Cost -->
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4" for="transportationCost">{{ 'transportation.cost'|trans }} *</label>
+                                            <div class="col-lg-8">
+                                                <input type="number" class="form-control" id="transportationCost" name="transportationCost" required="required">
+                                            </div>
+                                        </div>
+                                        <!-- Utility -->
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4" for="utility">{{ 'utility'|trans }} *</label>
+                                            <div class="col-lg-8">
+                                                <input type="number" class="form-control" id="utility" name="utility" required="required">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="save-service-row-btn" class="btn btn-primary">{{ 'save'|trans }}</button>
+                    <a href="#" class="btn" data-dismiss="modal">{{ 'cancel'|trans }}</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

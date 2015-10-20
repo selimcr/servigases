@@ -1,0 +1,183 @@
+{% extends 'Tech506CallServiceBundle:Admin:layouts/admin_layout.html.twig' %}
+
+{% block js %}
+    <script src="{{ asset('admin/js/tech506/tech506_profile.js') }}"></script>
+
+    <script type="text/javascript">
+        Tech506.module = "my-account";
+        Tech506.UI.vars["id"] = {{ app.user.id }};
+        Tech506.UI.translates["edit"] = "{{ 'edit'|trans }}";
+        Tech506.UI.urls['update-account'] = "{{ path('_admin_account_update') }}";
+        Tech506.UI.translates['password.confirm.not.same'] = "{{ 'password.confirm.error'|trans }}";
+        Tech506.UI.translates['password.lenght.error'] = "{{ 'password.lenght.error'|trans }}";
+        Tech506.UI.urls['update-password'] = "{{ path('_admin_account_update_password') }}";
+    </script>
+{% endblock js %}
+
+{% block mainContent %}
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <ol class="breadcrumb">
+                    <li><i class="fa fa-home"></i><a href="{{ path('_admin_home') }}">{{ 'home'|trans }}</a></li>
+                    <li><i class="icon_profile"></i>{{ 'my.profile'|trans }}</li>
+                </ol>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>{{ 'my.profile'|trans }}
+                            <small>{{ 'management'|trans }}</small>
+                        </h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                            <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#main" data-toggle="tab" aria-expanded="true">{{ 'my.profile'|trans }}</a></li>
+                                <li role="presentation"><a href="#edit" data-toggle="tab">{{ 'edit.profile'|trans }}</a></li>
+                            </ul>
+                            <div id="myTabContent" class="tab-content">
+                                <div role="tabpanel" class="tab-pane fade  active in" id="main">
+                                    <div class="form">
+                                        <h1>{{ 'my.details'|trans }}</h1>
+                                        <!-- Your details -->
+                                        <div class="address">
+                                            <address>
+                                                <!-- Your name -->
+                                                <strong id="account-name">{{ app.user.name ~ " " ~ app.user.lastname}}</strong><br>
+                                                <!-- Address
+                                                795 Folsom Ave, Suite 600<br>
+                                                San Francisco, CA 94107<br> -->
+
+                                                <!-- Phone number -->
+                                                <abbr title="Phone">T:</abbr> <span id="account-phone">{{ app.user.cellPhone }}</span><br>
+                                                <a href="mailto:#" id="account-email">{{ app.user.email }}</a>
+                                            </address>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div role="tabpanel" class="tab-pane fade" id="edit">
+                                    <section class="panel">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-sm-12">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">{{ "update.account.info"|trans }}</div>
+                                                    <div class="panel-body">
+                                                        <form class="form-horizontal form-align-left" id="form-info">
+                                                            <!-- Name -->
+                                                            <div class="form-group">
+                                                                <label class="control-label col-lg-4 col-sm-6" for="name">{{ 'name'|trans }} *</label>
+
+                                                                <div class="col-lg-8 col-sm-6">
+                                                                    <input type="text" class="form-control" id="name" name="name" required="required"
+                                                                           maxlength="250" value="{{ app.user.name }}">
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- LastName -->
+                                                            <div class="form-group">
+                                                                <label class="control-label col-lg-4 col-sm-6" for="lastname">{{ 'lastname'|trans }} *</label>
+
+                                                                <div class="col-lg-8 col-sm-6">
+                                                                    <input type="text" class="form-control" id="lastname" name="lastname" required="required"
+                                                                           maxlength="250" value="{{ app.user.lastname }}">
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- Email -->
+                                                            <div class="form-group">
+                                                                <label class="control-label col-lg-4 col-sm-6" for="email">{{ 'email'|trans }} *</label>
+
+                                                                <div class="col-lg-8 col-sm-6">
+                                                                    <input type="text" class="form-control" id="email" name="email" required="required"
+                                                                           maxlength="250" value="{{ app.user.email }}">
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- cellPhone -->
+                                                            <div class="form-group">
+                                                                <label class="control-label col-lg-4 col-sm-6" for="cellPhone">{{ 'cellPhone'|trans }} *</label>
+
+                                                                <div class="col-lg-8 col-sm-6">
+                                                                    <input type="text" class="form-control" id="cellPhone" name="cellPhone" required="required"
+                                                                           maxlength="250" value="{{ app.user.cellPhone }}">
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- Buttons -->
+                                                            <div class="form-group">
+                                                                <!-- Buttons -->
+                                                                <div class="col-lg-offset-3 col-lg-6 text-center">
+                                                                    <button type="submit"
+                                                                            class="btn btn-primary">{{ 'save'|trans }}</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-sm-12">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">{{ "change.password"|trans }}</div>
+                                                    <div class="panel-body">
+                                                        <form class="form-horizontal form-align-left" id="form-password">
+                                                            <!-- Current Password -->
+                                                            <div class="form-group">
+                                                                <label class="control-label col-lg-4 col-sm-6" for="current">{{ 'current.password'|trans }} *</label>
+
+                                                                <div class="col-lg-8 col-sm-6">
+                                                                    <input type="password" class="form-control" id="current" name="current" required="required"
+                                                                           maxlength="250" value="">
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- New Password -->
+                                                            <div class="form-group">
+                                                                <label class="control-label col-lg-4 col-sm-6" for="new">{{ 'new.password'|trans }} *</label>
+
+                                                                <div class="col-lg-8 col-sm-6">
+                                                                    <input type="password" class="form-control" id="new" name="new" required="required"
+                                                                           data-minlength="6" data-maxlength="8" value="">
+                                                                    <span class="help-block">{{ 'password.lenght.error'|trans }}</span>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-lg-4 col-sm-6" for="confirm">{{ 'confirm.password'|trans }} *</label>
+
+                                                                <div class="col-lg-8 col-sm-6">
+                                                                    <input type="password" class="form-control" id="confirm" name="confirm" required="required"
+                                                                           data-match="#new" data-match-error="Whoops, these don't match"
+                                                                           placeholder="{{ 'confirm'|trans }}" value="">
+                                                                    <div class="help-block with-errors"></div>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- Buttons -->
+                                                            <div class="form-group">
+                                                                <!-- Buttons -->
+                                                                <div class="col-lg-offset-3 col-lg-6 text-center">
+                                                                    <button type="submit"
+                                                                            class="btn btn-primary">{{ 'change'|trans }}</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock mainContent %}

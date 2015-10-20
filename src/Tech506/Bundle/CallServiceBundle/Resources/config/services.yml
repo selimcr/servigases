@@ -1,0 +1,24 @@
+services:
+    product_service:
+        class: Tech506\Bundle\CallServiceBundle\Services\ProductService
+        arguments: ["@security.context", "@router", "@logger", "@doctrine.orm.entity_manager", "@translator", "@session"]
+
+    call_service:
+        class: Tech506\Bundle\CallServiceBundle\Services\CallService
+        arguments: ["@security.context", "@router", "@logger", "@doctrine.orm.entity_manager", "@translator", "@session"]
+
+    technician_service_service:
+        class: Tech506\Bundle\CallServiceBundle\Services\TechnicianServiceService
+        arguments: ["@security.context", "@router", "@logger", "@doctrine.orm.entity_manager", "@translator", "@session"]
+
+    tecnotek.twig.items.extension:
+        class: Tech506\Bundle\CallServiceBundle\Twig\Extensions\ServicesExtension
+        tags:
+            - { name: twig.extension }
+        arguments:
+            em: "@doctrine.orm.entity_manager"
+            translator: "@translator"
+            session: "@session"
+            securityContext: "@security.context"
+            logger: "@logger"
+            router: "@router"

@@ -1,0 +1,131 @@
+{% extends 'Tech506CallServiceBundle:Admin:layouts/admin_layout.html.twig' %}
+
+{% block css %}
+    <link href="{{ asset('admin/css/fileinput.min.css') }}" media="all" rel="stylesheet" type="text/css" />
+{% endblock css %}
+
+{% block js %}
+    <script src="{{ asset('admin/js/fileinput.min.js') }}"></script>
+    <script src="{{ asset('admin/js/fileinput_locale_es.js') }}"></script>
+    <script src="{{ asset('admin/js/tech506/tech506_products.js') }}"></script>
+
+    <script type="text/javascript">
+        Tech506.module = "products-categories-list";
+        Tech506.UI.translates["edit"] = "{{ 'edit'|trans }}";
+        Tech506.UI.urls['save'] = "{{ path('_admin_products_categories_save') }}";
+    </script>
+{% endblock js %}
+
+{% block mainContent %}
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <ol class="breadcrumb">
+                    <li><i class="fa fa-home"></i><a href="{{ path('_admin_home') }}">{{ 'home'|trans }}</a></li>
+                    <li><i class="fa fa-list-alt"></i>{{ 'products.categories'|trans }}</li>
+                </ol>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-8 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>{{ 'products.categories'|trans }}
+                            <small>{{ 'list'|trans }}</small>
+                        </h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div id="custom-toolbar">
+                            <div class="form-inline" role="form">
+                                <button type="button" id="btn-new" class="btn btn-primary" ref="0" data-toggle="modal"
+                                        data-target="#form-content" title="{{ 'create'|trans }}">{{ 'new'|trans }}</button>
+                            </div>
+                        </div>
+                        <table id="catalog-list" class="table table-striped responsive-utilities jambo_table"
+                               data-toolbar="#custom-toolbar"
+                               data-toggle="table"
+                               data-url="{{ path('_admin_products_categories_list') }}"
+                               data-side-pagination="server"
+                               data-card-view="false"
+                               data-show-refresh="true" data-show-columns="true"
+                               data-search="true" data-select-item-name="toolbar1"
+                               data-pagination="true"
+                               data-page-list="[10, 25, 50, 100]"
+                               data-sort-name="name"
+                               data-sort-order="asc">
+                            <thead>
+                            <tr>
+                                <th data-field="id" data-sortable="true" class="col-md-1">
+                                    {{ '#'|trans }}
+                                </th>
+                                <th data-field="name" data-sortable="true" class="col-md-6">
+                                    {{ 'name'|trans }}
+                                </th>
+                                <th data-field="operate" data-card-visible="false" data-searchable="false"
+                                    data-formatter="Tech506.Products.List.operateFormatter"
+                                    data-events="Tech506.Products.List.operateEvents">{{ 'actions'|trans }}</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-12 col-xs-12">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div id="panel-catalog" class="panel panel-default hidden">
+                            <div class="panel-heading">
+                                <div id="panel-catalog-title" class="pull-left">{{ 'create'|trans }}</div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="padd">
+                                    <div class="form quick-post">
+                                        <form class="form-horizontal" id="form-catalog">
+                                            <!-- Name -->
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4" for="name">{{ 'name'|trans }} *</label>
+
+                                                <div class="col-lg-8">
+                                                    <input type="text" class="form-control" id="name" name="name" required="required"
+                                                           maxlength="250">
+                                                </div>
+                                            </div>
+
+                                            <!-- Description -->
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4" for="description">{{ 'description'|trans }} *</label>
+
+                                                <div class="col-lg-8">
+                                                    <textarea class="form-control" id="description" name="description"></textarea>
+                                                </div>
+                                            </div>
+
+                                            <!-- Buttons -->
+                                            <div class="form-group">
+                                                <!-- Buttons -->
+                                                <div class="col-lg-offset-2 col-lg-9">
+                                                    <button type="submit"
+                                                            class="btn btn-primary">{{ 'save'|trans }}</button>
+                                                    <button id="btn-cancel" type="reset"
+                                                            class="btn btn-default">{{ 'cancel'|trans }}</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="widget-foot">
+                                    <!-- Footer goes here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock mainContent %}
