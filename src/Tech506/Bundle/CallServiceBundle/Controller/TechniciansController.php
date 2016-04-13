@@ -13,6 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Tech506\Bundle\CallServiceBundle\Entity\Technician;
 use Tech506\Bundle\SecurityBundle\Entity\User;
 use Tech506\Bundle\SecurityBundle\Util\Enum\RolesEnum;
+use Tech506\Bundle\CallServiceBundle\Util\DateUtil;
 
 class TechniciansController extends Controller {
 
@@ -85,9 +86,7 @@ class TechniciansController extends Controller {
                     $user->setRh($request->get('rh'));
                     $user->setMaritalStatus($request->get('maritalStatus'));
                     $user->setGender($request->get('gender'));
-                    $birthDate = $request->get('birthDate');
-                    $user->setBirthdate((isset($birthDate) && trim($birthDate) != "")?
-                        new \DateTime($birthDate) : null);
+                    $user->setBirthdate(DateUtil::getDateValueFromUI($request->get('birthDate')));
                     $user->setIsActive( (isset($isActive))? 1:0);
                     $rawPassword = "abc123";
                     if($id == 0) { // If it's new must generates a new password
@@ -95,14 +94,8 @@ class TechniciansController extends Controller {
                         $user->setPassword($encoder->encodePassword($rawPassword, $user->getSalt()));
                         $isCreating = true;
                     }
-
-                    $vinculationDate = $request->get('vinculationDate');
-                    $entity->setVinculationDate((isset($vinculationDate) && trim($vinculationDate) != "")?
-                        new \DateTime($vinculationDate) : null);
-
-                    $vinculationEndingDate = $request->get('vinculationEndingDate');
-                    $entity->setVinculationEndingDate((isset($vinculationEndingDate) && trim($vinculationEndingDate) != "")?
-                        new \DateTime($vinculationEndingDate) : null);
+                    $entity->setVinculationDate(DateUtil::getDateValueFromUI($request->get('vinculationDate')));
+                    $entity->setVinculationEndingDate(DateUtil::getDateValueFromUI($request->get('vinculationEndingDate')));
 
                     $lastUniformDate = $request->get('lastUniformDate');
                     $entity->setLastUniformDate((isset($lastUniformDate) && trim($lastUniformDate) != "")?
@@ -249,7 +242,7 @@ class TechniciansController extends Controller {
                 'username'  => $user->getUsername(),
                 'identification' => $user->getIdentification(),
                 'identificationType' => $user->getIdentificationType(),
-                'birthDate' => (isset($birtDate))? $birtDate->format('Y-m-d'):'',
+                'birthDate' => (isset($birtDate))? $birtDate->format('d/m/Y'):'',
                 'birthPlace' => $user->getBirthPlace(),
                 'rh' => $user->getRh(),
                 'neighborhood' => $user->getNeighborhood(),
@@ -259,9 +252,9 @@ class TechniciansController extends Controller {
                 'gender' => $user->getGender(),
                 'picture'   => $user->getPicture(),
 
-                'vinculationDate' => (isset($vinculationDate))? $vinculationDate->format('Y-m-d'):'',
-                'vinculationEndingDate' =>(isset($vinculationEndingDate))? $vinculationEndingDate->format('Y-m-d'):'',
-                'lastUniformDate' =>(isset($lastUniformDate))? $lastUniformDate->format('Y-m-d'):'',
+                'vinculationDate' => (isset($vinculationDate))? $vinculationDate->format('d/m/Y'):'',
+                'vinculationEndingDate' =>(isset($vinculationEndingDate))? $vinculationEndingDate->format('d/m/Y'):'',
+                'lastUniformDate' =>(isset($lastUniformDate))? $lastUniformDate->format('d/m/Y'):'',
                 'shirtSize' => $technician->getShirtSize(),
                 'pantsSize' => $technician->getPantsSize(),
                 'shoesSize' => $technician->getShoesSize(),

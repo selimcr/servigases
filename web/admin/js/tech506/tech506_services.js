@@ -153,13 +153,6 @@ Tech506.Sales = {
         Schedule: {
             init: function() {
                 $(".select2").select2();
-                $('#scheduleDate').datepicker({
-                    format: "dd/mm/yyyy",
-                    todayBtn: true,
-                    language: "es",
-                    todayHighlight: true,
-                    autoclose: true
-                });
                 $("#scheduleHour").timepicker();
                 $("#addServiceBtn").click(function(e){
                     Tech506.Register.openAddServiceWindow();

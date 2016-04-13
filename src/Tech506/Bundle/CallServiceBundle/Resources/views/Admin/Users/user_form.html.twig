@@ -85,7 +85,10 @@
         <div class="form-group">
             <label class="control-label col-lg-4" for="birthDate">{{ 'birthDate'|trans }}</label>
             <div class="col-lg-8">
-                <input class="form-control" type="date" id="birthDate" name="birthDate" value="">
+                <input type="text" class="form-control has-feedback date-input" id="birthDate" name="birthDate" value=""
+                       placeholder="Fecha de Nacimiento" aria-describedby="inputSuccess2Status4">
+                <span class="fa fa-calendar-o form-control-feedback right" aria-hidden="true"></span>
+                <span id="inputSuccess2Status4" class="sr-only">(success)</span>
 
                 <p class="help-block">{{ 'birthdate.note'|trans }}</p>
             </div>

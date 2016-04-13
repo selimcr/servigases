@@ -132,6 +132,40 @@ var Tech506 = {
         vars:{},
         intervals:{},
         init:function () {
+            $('.date-input').daterangepicker({
+                locale: {
+                    format: 'DD/MM/YYYY',
+                    "daysOfWeek": [
+                        "D",
+                        "L",
+                        "M",
+                        "K",
+                        "J",
+                        "V",
+                        "S"
+                    ],
+                    "monthNames": [
+                        "Enero",
+                        "Febrero",
+                        "Marzo",
+                        "Abril",
+                        "Mayo",
+                        "Junio",
+                        "Julio",
+                        "Agosto",
+                        "Septiembre",
+                        "Octubre",
+                        "Noviembre",
+                        "Diciembre"
+                    ],
+                    "firstDay": 1
+                },
+                singleDatePicker: true,
+                calender_style: "picker_4",
+                showDropdowns: true
+            }, function (start, end, label) {
+                //console.log(start.toISOString(), end.toISOString(), label);
+            });
         },
         validateForm:function (formSelector) {
             //alert("validating form");

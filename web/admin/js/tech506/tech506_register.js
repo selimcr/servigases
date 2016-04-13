@@ -34,13 +34,6 @@ Tech506.Register = {
         console.debug("Register new Service");
         Tech506.UI.vars["services-total-amount"] = 0;
         $(".select2").select2();
-        $('#scheduleDate').datepicker({
-            format: "dd/mm/yyyy",
-            todayBtn: true,
-            language: "es",
-            todayHighlight: true,
-            autoclose: true
-        });
         $("#scheduleHour").timepicker();
         $("#findClientBtn").click(function (e) {
             e.preventDefault();

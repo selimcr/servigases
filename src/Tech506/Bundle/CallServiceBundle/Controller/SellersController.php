@@ -12,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Tech506\Bundle\CallServiceBundle\Entity\Seller;
 use Tech506\Bundle\SecurityBundle\Entity\User;
 use Tech506\Bundle\SecurityBundle\Util\Enum\RolesEnum;
+use Tech506\Bundle\CallServiceBundle\Util\DateUtil;
 
 class SellersController extends Controller {
 
@@ -84,9 +85,7 @@ class SellersController extends Controller {
                     $user->setRh($request->get('rh'));
                     $user->setMaritalStatus($request->get('maritalStatus'));
                     $user->setGender($request->get('gender'));
-                    $birthDate = $request->get('birthDate');
-                    $user->setBirthdate((isset($birthDate) && trim($birthDate) != "")?
-                        new \DateTime($birthDate) : null);
+                    $user->setBirthdate(DateUtil::getDateValueFromUI($request->get('birthDate')));
                     $user->setIsActive( (isset($isActive))? 1:0);
                     $rawPassword = "abc123";
                     if($id == 0) { // If it's new must generates a new password
@@ -94,21 +93,13 @@ class SellersController extends Controller {
                         $user->setPassword($encoder->encodePassword($rawPassword, $user->getSalt()));
                         $isCreating = true;
                     }
-
-                    $vinculationDate = $request->get('vinculationDate');
-                    $entity->setVinculationDate((isset($vinculationDate) && trim($vinculationDate) != "")?
-                        new \DateTime($vinculationDate) : null);
-
-                    $vinculationEndingDate = $request->get('vinculationEndingDate');
-                    $entity->setVinculationEndingDate((isset($vinculationEndingDate) && trim($vinculationEndingDate) != "")?
-                        new \DateTime($vinculationEndingDate) : null);
-
+                    $entity->setVinculationDate(DateUtil::getDateValueFromUI($request->get('vinculationDate')));
+                    $entity->setVinculationEndingDate(DateUtil::getDateValueFromUI($request->get('vinculationEndingDate')));
                     $entity->setObservations($request->get('observations'));
                     $entity->setEps($request->get('eps'));
                     $entity->setArl($request->get('arl'));
                     $entity->setCompensationFund($request->get('compensationFund'));
                     $entity->setPensionFund($request->get('pensionFund'));
-
                     $userId = $user->getId();
                     $userId = (isset($userId))? $userId:0;
                     if($em->getRepository("Tech506SecurityBundle:User")
@@ -236,7 +227,7 @@ class SellersController extends Controller {
                 'username'  => $user->getUsername(),
                 'identification' => $user->getIdentification(),
                 'identificationType' => $user->getIdentificationType(),
-                'birthDate' => (isset($birtDate))? $birtDate->format('Y-m-d'):'',
+                'birthDate' => (isset($birtDate))? $birtDate->format('d/m/Y'):'',
                 'birthPlace' => $user->getBirthPlace(),
                 'rh' => $user->getRh(),
                 'neighborhood' => $user->getNeighborhood(),
@@ -245,9 +236,8 @@ class SellersController extends Controller {
                 'maritalStatus' => $user->getMaritalStatus(),
                 'gender' => $user->getGender(),
                 'picture'   => $user->getPicture(),
-
-                'vinculationDate' => (isset($vinculationDate))? $vinculationDate->format('Y-m-d'):'',
-                'vinculationEndingDate' =>(isset($vinculationEndingDate))? $vinculationEndingDate->format('Y-m-d'):'',
+                'vinculationDate' => (isset($vinculationDate))? $vinculationDate->format('d/m/Y'):'',
+                'vinculationEndingDate' =>(isset($vinculationEndingDate))? $vinculationEndingDate->format('d/m/Y'):'',
                 'observations' => $seller->getObservations(),
                 'eps' => $seller->getEps(),
                 'arl' => $seller->getArl(),

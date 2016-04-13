@@ -5039,3 +5039,5 @@ input[type="checkbox"].form-control { height: 24px;  width: 10%;}
 /*address-inputs*/
 .address-inputs select {margin-bottom: 5px;}
 .address-inputs input, .address-inputs label {display: inline-block;}
+
+.daterangepicker {z-index: 999999;}

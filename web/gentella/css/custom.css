@@ -1734,7 +1734,7 @@ ul.msg_list li a .message {
     position: absolute;
     text-shadow: none;
     top: 100%;
-    z-index: 1000;
+    z-index: 9999;
     border-radius: 2px;
     border-top: 1px solid #999999;
 }
@@ -3196,6 +3196,7 @@ select.parsley-error {
     border: 1px solid #ADB2B5;
     line-height: 30px;
     border-radius: 0px !important;
+    color: rgba(0, 0, 0, 0.62);
 }
 
 .daterangepicker select.monthselect {
