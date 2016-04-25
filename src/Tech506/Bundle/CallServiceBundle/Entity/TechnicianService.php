@@ -56,6 +56,11 @@ class TechnicianService {
     protected $hour;
 
     /**
+     * @ORM\Column(type="string", length=20, nullable = false)
+     */
+    protected $securityCode;
+
+    /**
      * @ORM\Column(type="integer")
      */
     private $state;
@@ -300,6 +305,22 @@ class TechnicianService {
      */
     public function setAddressDetail($addressDetail) {
         $this->addressDetail = $addressDetail;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSecurityCode() {
+        return $this->securityCode;
+    }
+
+    /**
+     * @param mixed $securityCode
+     * @return TechnicianService
+     */
+    public function setSecurityCode($securityCode) {
+        $this->securityCode = $securityCode;
         return $this;
     }
 

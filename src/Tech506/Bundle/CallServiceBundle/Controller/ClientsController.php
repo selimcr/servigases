@@ -47,6 +47,7 @@ class ClientsController extends Controller {
                     'cellPhone'         => $client->getCellPhone(),
                     'email'             => $client->getEmail(),
                     'address'           => $client->getAddress(),
+                    'extraInformation'   => $client->getExtraInformation(),
                 )));
             } else {
                 return new Response(json_encode(array(
@@ -82,6 +83,7 @@ class ClientsController extends Controller {
             $phone = $request->get('phone');
             $email = $request->get('email');
             $cellPhone = $request->get('cellPhone');
+            $extraInformation = $request->get('extraInformation');
             $em = $this->getDoctrine()->getManager();
             $client = new Client();
             if($id != 0){
@@ -98,6 +100,7 @@ class ClientsController extends Controller {
             $client->setFullName($fullName);
             $client->setCellPhone($cellPhone);
             $client->setPhone($phone);
+            $client->setExtraInformation($extraInformation);
             $em->persist($client);
             $em->flush();
             return new Response(json_encode(array(

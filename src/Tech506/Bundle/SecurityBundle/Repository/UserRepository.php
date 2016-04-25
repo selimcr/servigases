@@ -163,6 +163,7 @@ class UserRepository extends CatalogRepository implements UserProviderInterface
             ->select('u, r')
             ->leftJoin('u.roles', 'r')
             ->where('r.role = :role')
+            ->orderBy('u.name', 'asc', 'u.lastname', 'asc')
             ->setParameter('role', $role)
             ->getQuery();
 

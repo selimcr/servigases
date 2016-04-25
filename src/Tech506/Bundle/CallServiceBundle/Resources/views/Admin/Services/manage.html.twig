@@ -37,6 +37,11 @@
         Tech506.UI.translates['services-status-desc-3'] = '{{ 'service.status.desc.3'|trans|raw }}';
         Tech506.UI.translates['services-status-desc-4'] = '{{ 'service.status.desc.4'|trans|raw }}';
         Tech506.UI.translates['services-status-desc-5'] = '{{ 'service.status.desc.5'|trans|raw }}';
+        {% if isAdmin %}
+        Tech506.UI.vars['is-admin'] = true;
+        {%  else %}
+        Tech506.UI.vars['is-admin'] = false;
+        {% endif %}
     </script>
 {% endblock js %}
 
@@ -71,6 +76,7 @@
                                 <p><span>{{ 'cellPhone'|trans }}: </span>
                                     <b id="identificationLabel">{{ service.client.cellPhone }}</b></p>
                                 <p><span>{{ 'email'|trans }}: </span><b id="emailLabel">{{ service.client.email }}</b></p>
+                                <p><span>{{ 'extra.information'|trans }}: </span><b id="extraInformationLabel">{{ service.client.extraInformation }}</b></p>
                             </div>
                         </div>
                     </form>

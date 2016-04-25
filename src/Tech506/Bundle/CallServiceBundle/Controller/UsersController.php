@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
+use Tech506\Bundle\CallServiceBundle\Util\Constants;
 use Tech506\Bundle\SecurityBundle\Entity\User;
 use Tech506\Bundle\SecurityBundle\Util\Enum\RolesEnum;
 
@@ -134,10 +135,9 @@ class UsersController extends Controller
                         $entity->setBirthdate(null);
                     }
                     $entity->setIsActive( ($isActive=="true")? 1:0);
-                    $rawPassword = $this->generateStrongPassword();
                     if($id == 0) { // If it's new must generates a new password
                         $encoder = $this->container->get('security.encoder_factory')->getEncoder($entity);
-                        $entity->setPassword($encoder->encodePassword($rawPassword, $entity->getSalt()));
+                        $entity->setPassword($encoder->encodePassword(Constants::DEFAULT_USERS_PASSWORD, $entity->getSalt()));
                         $isCreating = true;
                     }
 

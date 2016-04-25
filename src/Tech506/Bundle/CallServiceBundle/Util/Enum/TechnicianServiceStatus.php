@@ -7,10 +7,12 @@ use Tech506\Bundle\SecurityBundle\Util\Enum\BasicEnum;
  * Enum with the list of status of a TechnicianService
  */
 abstract class TechnicianServiceStatus extends BasicEnum {
-    const CREATED = 1;
-    const SCHEDULED = 2;
-    const CANCELED = 3;
-    const REALIZED = 4;
-    const COMMISIONED = 5;
+    const CREATED = 10;
+    const SCHEDULED = 20;
+    const RE_SCHEDULE = 25;
+    const CANCELED = 30;
+    const REALIZED = 40;
+    const LIQUIDADO = 45;
+    const COMMISIONED = 50;
 }
 ?>

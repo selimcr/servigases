@@ -34,13 +34,46 @@
                         <h2>{{ 'Services'|trans }}
                             <small>{{ 'list'|trans }}</small>
                         </h2>
+                        <a class="btn btn-primary pull-right" href="{{ path('_admin_services_register') }}">{{ 'new'|trans }}</a>
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
                         <!-- Table -->
                         <div id="custom-toolbar">
-                            <div class="form-inline" role="form">
-                                <a class="btn btn-primary" href="{{ path('_admin_services_register') }}">{{ 'new'|trans }}</a>
+                            <div class="row form-horizontal" role="form">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        {% if is_granted('ROLE_ADMIN') %}
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4" for="sellerFilter">{{ 'filter.by.seller'|trans }}</label>
+                                            <div class="col-lg-8">
+                                                {{ renderSellersSelect()|raw }}
+                                            </div>
+                                        </div>
+                                        {% endif %}
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4" for="technicianFilter">{{ 'filter.by.technician'|trans }}</label>
+                                            <div class="col-lg-8">
+                                                {{ renderTechniciansSelect()|raw }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4" for="statusFilter">{{ 'filter.by.status'|trans }}</label>
+                                            <div class="col-lg-8">
+                                                {{ renderServiceStatusSelect()|raw }}
+                                            </div>
+                                        </div>
+                                        <!--
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4" for="date">{{ 'enter.date'|trans }}</label>
+                                            <div class="col-lg-8">
+                                                <input type="text" class="form-control date-input-range" id="date" name="date" value="01/01/2015 - 31/01/2015">
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -56,7 +89,8 @@
                                data-pagination="true"
                                data-page-list="[10, 25, 50, 100]"
                                data-sort-name="name"
-                               data-sort-order="asc">
+                               data-sort-order="asc"
+                               data-query-params="Tech506.Sales.Services.List.catalogTableParams">
                             <thead>
                             <tr>
                                 <th data-field="id" data-sortable="true" class="col-md-1">

@@ -79,7 +79,7 @@ input[type="checkbox"].form-control {height: 24px; width: 24px;}
 
 /*address-inputs*/
 .address-inputs select {margin-bottom: 5px;}
-.address-inputs input, .address-inputs label {display: inline-block;}
+.address-inputs input, .address-inputs label {display: inline-block; margin-bottom: 5px;}
 
 input[type="number"].form-control {line-height: 25px;}
 
@@ -94,3 +94,4 @@ input[type="number"].form-control {line-height: 25px;}
 .service-schedule-box .hour {color: red; font-weight: bold;}
 
 textarea.form-control {line-height: 16px; height: 125px;}
+#custom-toolbar {margin-right: -5px;}

@@ -219,8 +219,8 @@ Tech506.Sales = {
                 var url = Tech506.UI.urls['manage-service'] + "/";
                     // "http://localhost/servigases/web/admin/services/schedule/open/";
                 return [
-                    '<a class="scheduleIcon" href="' + url + row.id + '" title="Programar">',
-                    '<i class="glyphicon glyphicon-calendar"></i>',
+                    '<a class="scheduleIcon" href="' + url + row.id + '" title="Ver/Editar">',
+                    '<i class="glyphicon glyphicon-edit"></i>',
                     '</a>'
                 ].join('');
 
@@ -237,6 +237,13 @@ Tech506.Sales = {
                     ].join('');
                 }*/
             },
+            catalogTableParams: function(params) {
+                params["status"] = Tech506.UI.vars["status"];
+                params["technician"] = Tech506.UI.vars["technician"];
+                params["seller"] = Tech506.UI.vars["seller"];
+                //params["date"] = Tech506.UI.vars["date"];
+                return params;
+            },
             operateEvents: {
                 'click .like': function (e, value, row, index) {
                     alert('You click like action, row: ' + JSON.stringify(row));
@@ -247,7 +254,26 @@ Tech506.Sales = {
                 }
             },
             init: function(){
-
+                Tech506.UI.vars["status"] = 0;
+                Tech506.UI.vars["seller"] = 0;
+                Tech506.UI.vars["technician"] = 0;
+                Tech506.UI.vars["date"] = "";
+                $("#serviceStatusFilter").change(function(e){
+                    Tech506.UI.vars["status"] = $(this).val();
+                    $("#catalog-list").bootstrapTable('refresh');
+                });
+                $("#sellersFilter").change(function(e){
+                    Tech506.UI.vars["seller"] = $(this).val();
+                    $("#catalog-list").bootstrapTable('refresh');
+                });
+                $("#techniciansFilter").change(function(e){
+                    Tech506.UI.vars["technician"] = $(this).val();
+                    $("#catalog-list").bootstrapTable('refresh');
+                });
+                $("#date").change(function(e){
+                    Tech506.UI.vars["date"] = $(this).val();
+                    $("#catalog-list").bootstrapTable('refresh');
+                });
             }
         },
         saveServicesRows: function() {
@@ -449,13 +475,14 @@ Tech506.Sales = {
             $(".partRemoveIcon").remove();
         },
         scheduleService: function () {
+            if(!Tech506.Register.areRequiredFieldsValid()){return;}
             var serviceId = $("#serviceId").val();
             var technicianId = $("#technician").val();
             var scheduleDate = $("#scheduleDate").val();
-            if(technicianId == 0 || scheduleDate == ""){
+            /*if(technicianId == 0 || scheduleDate == ""){
                 Tech506.showErrorMessage("No puede programar el servicio sin seleccionar el t�cnico y la fecha de visita");
                 return;
-            }
+            }*/
             Tech506.showPleaseWait();
             Tech506.ajaxCall(Tech506.UI.urls['schedule-service'], {
                     serviceId: serviceId,
@@ -468,7 +495,8 @@ Tech506.Sales = {
                     addressDetail: $("#addressDetail").val(),
                     scheduleHour: $("#scheduleHour").val(),
                     sellerId:   $("#seller").val(),
-                    neighborhood: $("#neighborhood").val()
+                    neighborhood: $("#neighborhood").val(),
+                    securityCode: $("#securityCode").val()
                 },
                 function (data) {
                     Tech506.hidePleaseWait();

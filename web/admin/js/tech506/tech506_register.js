@@ -117,14 +117,14 @@ Tech506.Register = {
             + '/' + price.utility + '/">';
         $newRow += '<td>' + $("#product option:selected").text() + " [" + price.name + "]" + '</td>';
         $newRow += '<td>' + Tech506.UI.formatMoney(price.fullPrice, 0) + '</td>';
-        if (Tech506.UI.vars['is-managin']) {
-            $newRow += '<td>' + Tech506.UI.formatMoney(price.sellerWin, 0) + '</td>';
+        $newRow += '<td>' + Tech506.UI.formatMoney(price.sellerWin, 0) + '</td>';
+        if (Tech506.UI.vars['is-managin'] && Tech506.UI.vars['is-admin']) {
             $newRow += '<td>' + Tech506.UI.formatMoney(price.technicianWin, 0) + '</td>';
             $newRow += '<td>' + Tech506.UI.formatMoney(price.transportationCost, 0) + '</td>';
             $newRow += '<td>' + Tech506.UI.formatMoney(price.utility, 0) + '</td>';
         }
         $newRow += '<td>';
-        if (Tech506.UI.vars['is-managin']) {
+        if (Tech506.UI.vars['is-managin'] && Tech506.UI.vars['is-admin']) {
             $newRow += '<button type="button" class="btn btn-primary btn-xs edit-service-btn removeOnCanceled" '
             $newRow += ' amount="' + price.fullPrice + '" rel="' + rowCount + '">';
             $newRow += ' <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>Editar';
@@ -179,7 +179,7 @@ Tech506.Register = {
         });
     },
     registerCall: function() {
-        //Revisar si el Cliente ya se buscó
+        //Revisar si el Cliente ya se buscï¿½
         var clientId = $("#clientId").val();
         if(clientId != 0 && Tech506.UI.vars['clientPhone'] != $("#phone").val()) {
             //El cliente no se ha cargado o no existe
@@ -190,6 +190,7 @@ Tech506.Register = {
         var phoneValue = $("#phone").val().trim();
         var cellPhoneValue = $("#cellPhone").val().trim();
         var emailValue = $("#email").val().trim();
+        var extraInformationValue = $("#extraInformation").val().trim();
         var observationsValue = $("#observations").val().trim();
         var referencePointValue = $("#referencePoint").val().trim();
         var state = $("#state option:selected").text();
@@ -197,6 +198,7 @@ Tech506.Register = {
         if(clientId == 0 && phoneValue === "") {
             Tech506.showInformationMessage(Tech506.UI.translates['call-confirm-error-no-client']);
         } else {
+            if(!Tech506.Register.areRequiredFieldsValid()){return;}
             /*if(observationsValue === "") {
                 Tech506.showInformationMessage(Tech506.UI.translates['call-confirm-error-no-observations']);
                 return;
@@ -204,6 +206,7 @@ Tech506.Register = {
             $("#phoneLabel").html(phoneValue == ""? "-":phoneValue);
             $("#cellPhoneLabel").html(cellPhoneValue == ""? "-":cellPhoneValue);
             $("#emailLabel").html(emailValue == ""? "-":emailValue);
+            $("#extraInformationLabel").html(extraInformationValue == ""? "-":extraInformationValue);
             var fullNameValue = $("#fullName").val().trim();
             $("#fullNameLabel").html(fullNameValue == ""? "-":fullNameValue);
             $("#observationsText").html(observationsValue == ""? "-":observationsValue);
@@ -241,7 +244,7 @@ Tech506.Register = {
             servicesHtml += '<p class="text-right">Total: ' + Tech506.UI.formatMoney(Tech506.UI.vars["services-total-amount"]) + '</p>';
             Tech506.UI.vars["services-ids"] = servicesLinesIds;
             if(servicesLinesIds == "") {
-                Tech506.showErrorMessage("No ha seleccionado ningún servicio");
+                Tech506.showErrorMessage("No es posible guardar sin seleccionar un servicio");
             } else {
                 $("#resume-container-services").html(servicesHtml);
                 $('#call-resume-container').modal('show');
@@ -324,6 +327,7 @@ Tech506.Register = {
         $("#email").val("");
         $("#cellPhone").val("");
         $("#fullName").val("");
+        $("#extraInformation").val();
     },
     findClient: function () {
         var phone = $("#phone").val().trim();
@@ -349,6 +353,7 @@ Tech506.Register = {
                             $("#email").val(data.email);
                             $("#cellPhone").val(data.cellPhone);
                             $("#fullName").val(data.fullName);
+                            $("#extraInformation").val(data.extraInformation);
                         } else {
                             Tech506.showInformationMessage(data.msg);
                         }
@@ -370,7 +375,8 @@ Tech506.Register = {
                 cellPhone: $("#cellPhone").val(),
                 email: $("#email").val(),
                 fullName: $("#fullName").val(),
-                address: ""
+                address: "",
+                extraInformation: $("#extraInformation").val()
             },
             function (data) {
                 Tech506.hidePleaseWait();
@@ -384,15 +390,27 @@ Tech506.Register = {
                 Tech506.hidePleaseWait();
             }, true);
     },
+    areRequiredFieldsValid: function() {
+        console.debug("ARE_REQUIRED_FIELDS_VALID");
+        $securityCode = $("#securityCode").val();
+        console.debug($securityCode.length);
+        if ($securityCode.length < 4) {
+            Tech506.showErrorMessage("El cÃ³digo de seguridad debe contener al menos 4 caracteres");
+            return false;
+        }
+        return true;
+    },
     logCall: function () {
         if(!Tech506.Register.validatePhone()){return;}
+        if(!Tech506.Register.areRequiredFieldsValid){return;}
         Tech506.showPleaseWait();
         Tech506.ajaxCall(Tech506.UI.urls['log-call'], {
                 id: $("#clientId").val(),
                 phone: $("#phone").val(),
-                identification: $("#identification").val(),
-                email: $("#email").val(),
                 fullName: $("#fullName").val(),
+                cellPhone: $("#cellPhone").val(),
+                email: $("#email").val(),
+                extraInformation: $("#extraInformation").val(),
                 neighborhood: $("#neighborhood").val(),
                 address: $("#address").val(),
                 observations: $("#observations").val(),
@@ -403,7 +421,8 @@ Tech506.Register = {
                 addressDetail: $("#addressDetail").val(),
                 scheduleDate: $("#scheduleDate").val(),
                 scheduleHour: $("#scheduleHour").val(),
-                sellerId: $("#seller").val()
+                sellerId: $("#seller").val(),
+                securityCode: $("#securityCode").val(),
             },
             function (data) {
                 Tech506.hidePleaseWait();
@@ -421,7 +440,7 @@ Tech506.Register = {
     validatePhone: function() {
         var phoneValue = $("#phone").val().trim();
         if((phoneValue.length < 7)) {
-            Tech506.showErrorMessage("El número de teléfono debe tener al menos 7 números");
+            Tech506.showErrorMessage("El nï¿½mero de telï¿½fono debe tener al menos 7 nï¿½meros");
             return false;
         }
         return true;

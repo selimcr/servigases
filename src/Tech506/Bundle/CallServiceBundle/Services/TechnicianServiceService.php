@@ -20,6 +20,8 @@ class TechnicianServiceService {
     private $translator;
     private $session;
 
+    const SECURITY_CODE_LENGTH = 6;
+
     public function __construct($securityContext, $router, $logger, \Doctrine\ORM\EntityManager $em,
                                 $translator, $session) {
         $this->securityContext = $securityContext;
@@ -61,5 +63,15 @@ class TechnicianServiceService {
             $this->em->remove($partEntity);
         }
         $this->em->flush();
+    }
+
+    public static function generateRandomSecurityCode() {
+        $characters = '0123456789ABCDEFGHJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < TechnicianServiceService::SECURITY_CODE_LENGTH; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 }

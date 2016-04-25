@@ -8,6 +8,7 @@
     {% set observations = service.observations %}
     {% set scheduleDate = service.scheduleDate|date('d/m/Y') %}
     {% set scheduleHour = service.hour %}
+    {% set securityCode = service.securityCode %}
 {% else %}
     {% set stateId = 0 %}
     {% set selectedSellerId = sellerId %}
@@ -91,8 +92,7 @@
                 <div class="col-lg-4 col-md-6 col-sm-12">
                     <!-- Reference Point -->
                     <div class="form-group">
-                        <label class="control-label col-lg-4" for="referencePoint">{{ 'reference.point'|trans }}
-                            *</label>
+                        <label class="control-label col-lg-4" for="referencePoint">{{ 'reference.point'|trans }}</label>
 
                         <div class="col-lg-8">
                             <textarea class="form-control read-only-on-canceled" id="referencePoint" name="referencePoint">{{ referencePoint }}</textarea>
@@ -111,6 +111,17 @@
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12">
+                    <!-- securityCode -->
+                    <div class="form-group">
+                        <label class="control-label col-lg-4" for="securityCode">{{ 'security.code'|trans }}</label>
+
+                        <div class="col-lg-8">
+                            <input class="form-control read-only-on-canceled" type="text" id="securityCode"
+                                   name="securityCode" value="{{ securityCode }}">
+                            <p class="help-block">{{ 'security.code.note'|trans }}</p>
+                        </div>
+                    </div>
+
                     <!-- visitDate -->
                     <div class="form-group">
                         <label class="control-label col-lg-4" for="scheduleDate">{{ 'visit.date'|trans }}</label>
@@ -134,7 +145,7 @@
                         </div>
                     </div>
 
-                    {% if service is defined %}
+                    {% if isAdmin and technicians is defined %}
                         <!-- Tecnician -->
                         <div class="form-group">
                             <label class="control-label col-lg-4" for="technician">{{ 'technician'|trans }} *</label>
@@ -150,11 +161,13 @@
                                 </select>
                             </div>
                         </div>
+                    {% else %}
+                        <input type="hidden" id="technician" name="technician" value="{{ technicianId }}">
                     {% endif %}
                 </div>
             </div>
             <div class="row text-center">
-                <button type="button" id="registerBtn" class="btn btn-primary removeOnCanceled">{{ 'register.service'|trans }}</button>
+                <button type="button" id="registerBtn" class="btn btn-primary removeOnCanceled">{{ 'save.visit'|trans }}</button>
             </div>
 
         </form>

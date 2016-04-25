@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 use Tech506\Bundle\CallServiceBundle\Entity\Technician;
+use Tech506\Bundle\CallServiceBundle\Util\Constants;
 use Tech506\Bundle\SecurityBundle\Entity\User;
 use Tech506\Bundle\SecurityBundle\Util\Enum\RolesEnum;
 use Tech506\Bundle\CallServiceBundle\Util\DateUtil;
@@ -88,10 +89,9 @@ class TechniciansController extends Controller {
                     $user->setGender($request->get('gender'));
                     $user->setBirthdate(DateUtil::getDateValueFromUI($request->get('birthDate')));
                     $user->setIsActive( (isset($isActive))? 1:0);
-                    $rawPassword = "abc123";
                     if($id == 0) { // If it's new must generates a new password
                         $encoder = $this->container->get('security.encoder_factory')->getEncoder($user);
-                        $user->setPassword($encoder->encodePassword($rawPassword, $user->getSalt()));
+                        $user->setPassword($encoder->encodePassword(Constants::DEFAULT_USERS_PASSWORD, $user->getSalt()));
                         $isCreating = true;
                     }
                     $entity->setVinculationDate(DateUtil::getDateValueFromUI($request->get('vinculationDate')));

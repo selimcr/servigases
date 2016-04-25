@@ -83,6 +83,9 @@ apply.to: Aplicar a
 
 prices.defined: Precios Definidos
 filter.by.category: Filtrar por Categoría
+filter.by.seller: Asesor
+filter.by.technician: Técnico
+filter.by.status: Estado
 
 # Fields
 employee: Colaborador
@@ -219,8 +222,14 @@ select.service: Seleccione el servicio
 confirm.delete.service: ¿Está seguro que desea eliminar este servicio?
 edit.service: Editar Servicio
 save.services: Guardar Servicios
+save.visit: Guardar Visita
 information: Información
 schedule.information: Información de Programación
+extra.information: Información Adicional
+extra.customer.info.help: Incluya información adicional de contacto como otro número de teléfono (oficina)
+security.code: Código de Seguridad
+security.code.note: Código que el cliente confirma al recibir la visita del Técnico
+enter.date: Fecha
 
 # Reports
 Daily Schedule: Programación Diaria
@@ -238,21 +247,23 @@ marital.status.4: Divorciado(a)
 marital.status.5: Viudo(a)
 
 #Services Status
-services.status.1: Creado
-services.status.2: Programado
-services.status.3: Cancelado
-services.status.4: Realizado
-services.status.5: Comisionado
+services.status.10: Creado
+services.status.20: Programado
+services.status.25: Reprogramar
+services.status.30: Cancelado
+services.status.40: Realizado
+services.status.45: Liquidado
+services.status.50: Comisionado
 
-service.status.desc.1: En este estado el servicio puede modificarse y ser reasignado a un técnico; <b>para cambiarlo a estado "Programado"</b>, debe en el panel "Información de Visita" seleccionar el técnico y la fecha de la visita. También podrá cancelarlo utilizando el botón de abajo, una vez cancelado no podrá modificarlo y las comisiones no serán aplicadas ni a los Asesores o Técnicos.
-service.status.desc.2: En este estado el servicio puede modificarse y ser reasignado a un técnico, o cancelarse; además de que una vez realizado el servicio puede utilizando el botón de abajo cambiar el estado a "Realizado"; <b>sólo los servicios en el estado "Realizado" se incluirán en las liquidaciones de Asesores y Técnicos</b>.
-service.status.desc.3: Este servicio fue cancelado; no se puede modificar o cambiar de estado y las comisiones a Asesores o Técnicos no serán aplicados
-service.status.desc.4: Este servicio fue finalizado; no se puede modificar la información o cambiar de estado desde esta página; las comisiones se aplicarán para Asesores y Técnicos y una vez aplicados este servicio cambiará de estado a "Comisionado".
+service.status.desc.10: En este estado el servicio puede modificarse y ser reasignado a un técnico; <b>para cambiarlo a estado "Programado"</b>, debe en el panel "Información de Visita" seleccionar el técnico y la fecha de la visita. También podrá cancelarlo utilizando el botón de abajo, una vez cancelado no podrá modificarlo y las comisiones no serán aplicadas ni a los Asesores o Técnicos.
+service.status.desc.20: En este estado el servicio puede modificarse y ser reasignado a un técnico, o cancelarse; además de que una vez realizado el servicio puede utilizando el botón de abajo cambiar el estado a "Realizado"; <b>sólo los servicios en el estado "Realizado" se incluirán en las liquidaciones de Asesores y Técnicos</b>.
+service.status.desc.30: Este servicio fue cancelado; no se puede modificar o cambiar de estado y las comisiones a Asesores o Técnicos no serán aplicados
+service.status.desc.40: Este servicio fue finalizado; no se puede modificar la información o cambiar de estado desde esta página; las comisiones se aplicarán para Asesores y Técnicos y una vez aplicados este servicio cambiará de estado a "Comisionado".
 
-service.status.desc.b.1: En este estado el servicio puede modificarse y ser reasignado a un técnico; para cambiarlo a estado Programado. También podrá cancelarlo utilizando el botón, una vez cancelado no podrá modificarlo y las comisiones no serán aplicadas ni a los Asesores o Técnicos.
-service.status.desc.b.2: En este estado el servicio puede modificarse y ser reasignado a un técnico, o cancelarse; además de que una vez realizado el servicio puede utilizando el botón cambiar el estado a Realizado; sólo los servicios en el estado Realizado se incluirán en las liquidaciones de Asesores y Técnicos.
-service.status.desc.b.3: Este servicio fue cancelado; no se puede modificar o cambiar de estado y las comisiones a Asesores o Técnicos no serán aplicadas
-service.status.desc.b.4: Este servicio fue finalizado; no se puede modificar la información; las comisiones se aplicarán para Asesores y Técnicos y una vez aplicados este servicio cambiará de estado a Comisionado.
+service.status.desc.b.10: En este estado el servicio puede modificarse y ser reasignado a un técnico; para cambiarlo a estado Programado. También podrá cancelarlo utilizando el botón, una vez cancelado no podrá modificarlo y las comisiones no serán aplicadas ni a los Asesores o Técnicos.
+service.status.desc.b.20: En este estado el servicio puede modificarse y ser reasignado a un técnico, o cancelarse; además de que una vez realizado el servicio puede utilizando el botón cambiar el estado a Realizado; sólo los servicios en el estado Realizado se incluirán en las liquidaciones de Asesores y Técnicos.
+service.status.desc.b.30: Este servicio fue cancelado; no se puede modificar o cambiar de estado y las comisiones a Asesores o Técnicos no serán aplicadas
+service.status.desc.b.40: Este servicio fue finalizado; no se puede modificar la información; las comisiones se aplicarán para Asesores y Técnicos y una vez aplicados este servicio cambiará de estado a Comisionado.
 
 # Dashboard
 older.adults.age.ranges: Cantidad Adultos Mayores por Rango de Edades

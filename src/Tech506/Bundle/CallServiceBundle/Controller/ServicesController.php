@@ -13,6 +13,8 @@ use Tech506\Bundle\CallServiceBundle\Entity\Call;
 use Tech506\Bundle\CallServiceBundle\Entity\Client;
 use Tech506\Bundle\CallServiceBundle\Entity\ServiceDetail;
 use Tech506\Bundle\CallServiceBundle\Entity\TechnicianService;
+use Tech506\Bundle\CallServiceBundle\Services\TechnicianServiceService;
+use Tech506\Bundle\CallServiceBundle\Util\DateUtil;
 use Tech506\Bundle\CallServiceBundle\Util\Enum\TechnicianServiceStatus;
 
 /**
@@ -136,6 +138,8 @@ class ServicesController extends Controller {
             'isAdmin' => $isAdmin,
             'users' => $users,
             'sellerId'  => $userId,
+            'securityCode'  => TechnicianServiceService::generateRandomSecurityCode(),
+            'technicianId' => 0
         ));
     }
 
@@ -192,7 +196,7 @@ class ServicesController extends Controller {
                             }
                             break;
                         default:
-                            $message = "No se está realizando un cambio válido";
+                            $message = "No se estï¿½ realizando un cambio vï¿½lido";
                             break;
                     }
                 } else {
@@ -290,7 +294,7 @@ class ServicesController extends Controller {
 
     /**
      * @Route("/schedule/do", name="_admin_services_schedule_do")
-     * @Security("is_granted('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_SELLER')")
      * @Template()
      */
     public function doScheduleAction() {
@@ -311,10 +315,15 @@ class ServicesController extends Controller {
             $scheduleDate = $request->get('scheduleDate');
             if(isset($scheduleDate)) {
                 $technicianService->setScheduleDate(\DateTime::createFromFormat('d/m/Y', $scheduleDate));
+                if ( isset($technician) ) {
+                    $technicianService->setStatus(TechnicianServiceStatus::SCHEDULED);
+                } else {
+                    $technicianService->setStatus(TechnicianServiceStatus::CREATED);
+                }
             } else {
                 $technicianService->setScheduleDate(null);
+                $technicianService->setStatus(TechnicianServiceStatus::CREATED);
             }
-            $technicianService->setStatus(TechnicianServiceStatus::SCHEDULED);
             $technicianService->setObservations($request->get('observations'));
             $technicianService->setReferencePoint($request->get('referencePoint'));
             $technicianService->setState($request->get('state'));
@@ -322,6 +331,7 @@ class ServicesController extends Controller {
             $technicianService->setAddressDetail($request->get('addressDetail'));
             $technicianService->setHour($request->get('scheduleHour'));
             $technicianService->setNeighborhood($request->get('neighborhood'));
+            $technicianService->setSecurityCode($request->get('securityCode'));
             $em->persist($technicianService);
             $em->flush();
             $translator = $this->get('translator');
@@ -395,12 +405,16 @@ class ServicesController extends Controller {
             $order = $request->get('order');
             $search = $request->get('search');
             $sort = $request->get('sort');
+            $status = $request->get('status');
+            $technician = $request->get('technician');
+            $seller = $request->get('seller');
+            $date = DateUtil::getDateValueFromUI($request->get('date'));
             $em = $this->getDoctrine()->getManager();
             $usr= $this->get('security.context')->getToken()->getUser();
             $isAdmin = $this->get('security.context')->isGranted('ROLE_ADMIN');
             $userId = $isAdmin? 0:$usr->getId();
             $paginator = $em->getRepository('Tech506CallServiceBundle:TechnicianService')
-                ->getPageWithFilterForUser($offset, $limit, $search, $sort, $order, $userId);
+                ->getPageWithFilterForUser($offset, $limit, $search, $sort, $order, $userId, $status, $technician, $seller, $date);
             $results = $this->getResults($paginator);
             return new Response(json_encode(array('total'   => count($paginator),
                 'rows'    => $results)));
@@ -435,7 +449,7 @@ class ServicesController extends Controller {
 
     /**
      * @Route("/{id}", name="_admin_services_manage", defaults={"id" = 0})
-     * @Security("is_granted('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_SELLER')")
      * @Template()
      */
     public function manageAction($id) {

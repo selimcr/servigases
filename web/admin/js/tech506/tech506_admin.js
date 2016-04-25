@@ -121,7 +121,17 @@ var Tech506 = {
         });
     },
     showErrorMessage:function (message) {
-        alert(message);
+        bootbox.dialog({
+            message: message,
+            title: '<span style="color: red; font-weight: bold;">Upps, algo no ha salido bien</span>',
+            onEscape: function() {},
+            show: true,
+            closeButton: true,
+            animate: true,
+            buttons: {
+                "Cerrar": function() {}
+            }
+        });
     },
     showConfirmationQuestion:function (message) {
         return confirm(message);
@@ -165,6 +175,36 @@ var Tech506 = {
                 showDropdowns: true
             }, function (start, end, label) {
                 //console.log(start.toISOString(), end.toISOString(), label);
+            });
+            $('.date-input-range').daterangepicker({
+                locale: {
+                    format: 'DD/MM/YYYY',
+                    "daysOfWeek": [
+                        "D",
+                        "L",
+                        "M",
+                        "K",
+                        "J",
+                        "V",
+                        "S"
+                    ],
+                    "monthNames": [
+                        "Enero",
+                        "Febrero",
+                        "Marzo",
+                        "Abril",
+                        "Mayo",
+                        "Junio",
+                        "Julio",
+                        "Agosto",
+                        "Septiembre",
+                        "Octubre",
+                        "Noviembre",
+                        "Diciembre"
+                    ],
+                    "firstDay": 1
+                },
+                showDropdowns: true
             });
         },
         validateForm:function (formSelector) {

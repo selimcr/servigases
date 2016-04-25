@@ -1,6 +1,8 @@
 <?php
 namespace Tech506\Bundle\SecurityBundle\Twig\Extensions;
 
+use Tech506\Bundle\CallServiceBundle\Util\Enum\Role;
+use Tech506\Bundle\CallServiceBundle\Util\Enum\TechnicianServiceStatus;
 use Tech506\Bundle\SecurityBundle\Entity\User;
 use Tech506\Bundle\SecurityBundle\Util\Enum\IdentificationTypesEnum;
 use Tech506\Bundle\SecurityBundle\Util\Enum\MaritalStatusEnum;
@@ -43,6 +45,10 @@ class FormItemsExtension extends \Twig_Extension
             'renderProductCategoriesFilterSelect' => new \Twig_Function_Method($this, 'renderProductCategoriesFilterSelect'),
             'renderProductsCategorizedSelect' => new \Twig_Function_Method($this, 'renderProductsCategorizedSelect'),
             'renderServicesSelect' => new \Twig_Function_Method($this, 'renderServicesSelect'),
+            'renderSellersSelect' => new \Twig_Function_Method($this, 'renderSellersSelect'),
+            'renderTechniciansSelect' => new \Twig_Function_Method($this, 'renderTechniciansSelect'),
+            'renderServiceStatusSelect' => new \Twig_Function_Method($this, 'renderServiceStatusSelect'),
+
             );
     }
 
@@ -148,20 +154,58 @@ class FormItemsExtension extends \Twig_Extension
         return $html;
     }
 
+    public function renderSellersSelect() {
+        $html = '<select id="sellersFilter" name="sellersFilter" class="form-control read-only-on-canceled">';
+        $html .= '<option value="0">Todos</option>';
+        $sellers = $this->em->getRepository("Tech506SecurityBundle:User")->getUsersByRole(Role::SELLER);
+        foreach($sellers as $seller){
+            $html .= '<option value="' . $seller->getId() . '"' .
+                '>' . $seller->getFullName() . '</option>';
+        }
+        $html .= "</select>";
+        return $html;
+    }
+
+    public function renderServiceStatusSelect() {
+        $html = '<select id="serviceStatusFilter" name="serviceStatusFilter" class="form-control read-only-on-canceled">';
+        $html .= '<option value="0">Todos</option>';
+        $sellers = $this->em->getRepository("Tech506SecurityBundle:User")->getUsersByRole(Role::SELLER);
+        foreach(TechnicianServiceStatus::getConstants() as $status){
+            $html .= '<option value="' . $status . '"' .
+                '>' . $this->translator->trans('services.status.' . $status) . '</option>';
+        }
+        $html .= "</select>";
+        return $html;
+    }
+
+    public function renderTechniciansSelect() {
+        $html = '<select id="techniciansFilter" name="techniciansFilter" class="form-control read-only-on-canceled">';
+        $html .= '<option value="0">Todos</option>';
+        $technicians = $this->em->getRepository("Tech506CallServiceBundle:Technician")->findAll();
+        foreach($technicians as $technician){
+            $html .= '<option value="' . $technician->getId() . '"' .
+                '>' . $technician->getUser()->getFullName() . '</option>';
+        }
+        $html .= "</select>";
+        return $html;
+    }
+
     public function renderAddressInputs($address) {
         $dir1 = "";
         $dir2 = "";
         $dir3 = "";
         $dir4 = "";
         if($address != ""){
-            $addressComponents = preg_split("/[\s::]+/", $address);
+            $address = str_replace("::", "&", $address);
+            $addressComponents = preg_split("/[&]+/", $address);
+
             $dir1 = trim($addressComponents[0]);
             $dir2 = sizeof($addressComponents) < 2? "":trim($addressComponents[1]);
             $dir3 = sizeof($addressComponents) < 3? "":trim($addressComponents[2]);
             $dir4 = sizeof($addressComponents) < 4? "":trim($addressComponents[3]);
         }
         $list = array("Calle", "Carrera", "Avenida", "Avenida Carrera", "Avenida Calle", "Circular", "Circunvalar",
-            "Diagonal", "Manzana", "Transversal", "Vía");
+            "Diagonal", "Manzana", "Transversal", "Vï¿½a");
 
         $html = '<span class="address-inputs">';
         $html .= '<select id="dir1" name="dir1" class="form-control combo first read-only-on-canceled">';
@@ -169,11 +213,11 @@ class FormItemsExtension extends \Twig_Extension
             $html .= '<option value="' . $item . '"' . ($item == $dir1? ' selected="selected"':'') . '>' . $item . '</option>';
         }
         $html .= '</select>';
-        $html .= '<input name="dir2" class="form-control read-only-on-canceled" id="dir2" value="' . $dir2 . '" style="width: 75px;" type="text">';
-        $html .= '<label style="width: 4%;" name="">#</label>';
-        $html .= '<input name="dir3" class="form-control read-only-on-canceled" id="dir3" value="' . $dir3 . '" style="width: 60px;" type="text">';
-        $html .= '<label style="width: 4%;" name="">-</label>';
-        $html .= '<input name="dir4" class="form-control last read-only-on-canceled" id="dir4" value="' . $dir4 . '" style="width: 60px;" type="text">';
+        $html .= '<input name="dir2" class="form-control read-only-on-canceled" id="dir2" value="' . $dir2 . '" style="width: 100%; font-size: 11px;" type="text">';
+        $html .= '<br><label style="width: 10%;" name="">#&nbsp;&nbsp;</label>';
+        $html .= '<input name="dir3" class="form-control read-only-on-canceled" id="dir3" value="' . $dir3 . '" style="width: 40%; font-size: 11px;" type="text">';
+        $html .= '<label style="width: 10%;" name="">&nbsp;&nbsp;-&nbsp;&nbsp;</label>';
+        $html .= '<input name="dir4" class="form-control last read-only-on-canceled" id="dir4" value="' . $dir4 . '" style="width: 40%; font-size: 11px;" type="text">';
             //<input type="hidden" name="direccion" id="direccion" value="{{dir1}} {{dir2}} # {{dir3}} - {{dir4}}, en {{dir5}}. Edif: {{dir6}}" style="">
         $html .= '</span>';
         return $html;

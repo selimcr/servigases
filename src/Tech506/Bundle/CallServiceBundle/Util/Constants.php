@@ -1,13 +1,10 @@
 <?php
-namespace Tecnotek\Bundle\AsiloBundle\Util;
+namespace Tech506\Bundle\CallServiceBundle\Util;
 
 /**
  *
  */
-class Constants
-{
-    /* Types of Items of the Activities */
-    const ACTIVITY_ITEM_TYPE_YES_NO = 1;
-
+class Constants {
+    const DEFAULT_USERS_PASSWORD = "abc123";
 }
 ?>

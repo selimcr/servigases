@@ -46,6 +46,7 @@ class CallService {
         $service->setAddress($request->get('serviceAddress'));
         $service->setObservations($request->get('observations'));
         $service->setAddressDetail($request->get('addressDetail'));
+        $service->setSecurityCode($request->get('securityCode'));
         $scheduleDate = $request->get('scheduleDate');
         if(isset($scheduleDate)) {
             $service->setScheduleDate(\DateTime::createFromFormat('d/m/Y', $scheduleDate));
@@ -100,6 +101,7 @@ class CallService {
         $service->setAddress($request->get('serviceAddress'));
         $service->setObservations($request->get('observations'));
         $service->setAddressDetail($request->get('addressDetail'));
+        $service->setSecurityCode($request->get('securityCode'));
         $scheduleDate = $request->get('scheduleDate');
         if(isset($scheduleDate)) {
             $service->setScheduleDate(\DateTime::createFromFormat('d/m/Y', $scheduleDate));
@@ -130,6 +132,7 @@ class CallService {
         $client->setCellPhone($cellPhone);
         $client->setEmail($email);
         $client->setFullName($request->get('fullName'));
+        $client->setExtraInformation($request->get('extraInformation'));
         $client->setAddress("");
         $this->em->persist($client);
         $this->em->flush($client);

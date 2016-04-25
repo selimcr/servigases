@@ -16,6 +16,13 @@ class TechniciansRepository extends GenericRepository {
         return $this->getEntityName() === $class || is_subclass_of($class, $this->getEntityName());
     }
 
+    public function findAll() {
+        $dql = "SELECT d FROM " . $this->getEntityName() . " d JOIN d.user u";
+        $dql .= " order by u.name asc, u.lastname asc";
+        $query = $this->getEntityManager()->createQuery($dql);
+        return $query->getResult();
+    }
+
     public function getPageWithFilter($offset, $limit, $search, $sort, $order ){
         $dql = "SELECT d FROM " . $this->getEntityName() . " d JOIN d.user u";
         $dql .= ($search == "")? "":" WHERE u.name LIKE :search OR u.lastName LIIKE :search OR u.email LIKE :search OR u.username LIKE :search";

@@ -43,14 +43,19 @@ class Client {
     protected $phone;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $email;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $address;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $extraInformartion;
 
     public function __construct() {
     }
@@ -141,6 +146,22 @@ class Client {
 
     public function toString(){
         return $this->fullName . " [" . $this->phone . "] ";
+    }
+
+    /**
+     * @param mixed $extraInformation
+     * @return Client
+     */
+    public function setExtraInformation($extraInformation) {
+        $this->extraInformartion = $extraInformation;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getExtraInformation() {
+        return $this->extraInformartion;
     }
 
     public function __toString(){

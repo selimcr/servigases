@@ -309,6 +309,20 @@ Tech506.Products = {
             params["product"] = $("#product").val();
             return params;
         },
+        validatePrice: function() {
+            $total = $("#fullPrice").val()*1;
+            $t = $("#sellerWin").val()*1;
+            $t += $("#technicianWin").val()*1;
+            $t += $("#transportationCost").val()*1;
+            $t += $("#utility").val()*1;
+            if ($total != $t) {
+                Tech506.showErrorMessage("El total no cuadra con los montos ingresados<br>Suma = " +
+                    Tech506.UI.formatMoney($t) + "<br>Total = "
+                    + Tech506.UI.formatMoney($total));
+                return false
+            }
+            return true;
+        },
         init: function() {
             $("#product").change(function(){
                 $("#panel-catalog").addClass("hidden");
@@ -352,6 +366,9 @@ Tech506.Products = {
                 onSuccess: function(e){
                     e.preventDefault();
                     e.stopPropagation();
+                    if (!Tech506.Products.Prices.validatePrice()) {
+                        return;
+                    }
                     Tech506.showPleaseWait();
                     Tech506.ajaxCall(Tech506.UI.urls['save'], {
                             id:             Tech506.UI.vars["id"],

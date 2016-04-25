@@ -36,9 +36,11 @@
                     <th>{{ 'service'|trans }}</th>
                     <th>{{ 'amount'|trans }}</th>
                     <th>{{ 'seller.win'|trans }}</th>
+                    {% if isAdmin %}
                     <th>{{ 'technician.win'|trans }}</th>
                     <th>{{ 'transportation.cost'|trans }}</th>
                     <th>{{ 'utility'|trans }}</th>
+                    {% endif %}
                     <th></th>
                 </tr>
                 </thead>
@@ -52,13 +54,17 @@
                         <td>{{ detail.productSaleType.product }} [{{ detail.productSaleType.name }}]</td>
                         <td>{{ detail.fullPrice|renderMoney }}</td>
                         <td>{{ detail.sellerWin|renderMoney }}</td>
+                        {% if isAdmin %}
                         <td>{{ detail.technicianWin|renderMoney }}</td>
                         <td>{{ detail.transportationCost|renderMoney }}</td>
                         <td>{{ detail.utility|renderMoney }}</td>
+                        {% endif %}
                         <td>
+                            {% if isAdmin %}
                             <button type="button" class="btn btn-primary btn-xs edit-service-btn removeOnCanceled" amount="0" rel="{{ loop.index }}">
                                 <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>{{ 'edit'|trans }}
                             </button>
+                            {% endif %}
                             <button type="button" class="btn btn-primary btn-xs delete-service-btn removeOnCanceled" amount="{{ detail.fullPrice }}" rel="{{ loop.index }}">
                                 <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>{{ 'delete'|trans }}
                             </button>
@@ -73,6 +79,7 @@
                 <tr>
                     <th>{{ 'service'|trans }}</th>
                     <th>{{ 'amount'|trans }}</th>
+                    <th>{{ 'seller.win'|trans }}</th>
                     <th></th>
                 </tr>
                 </thead>
