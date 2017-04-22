@@ -55,6 +55,7 @@ var Tech506 = {
                 case "services-change-status": Tech506.Sales.Services.StatusChange.init(); break;
                 case "commisions-apply": Tech506.Comissions.Apply.init(); break;
                 case "report-daily-schedule": Tech506.Reports.DailySchedule.init(); break;
+                case "dashboard-seller": Tech506.Dashboards.Sellers.init();
                 default: break;
             }
         }

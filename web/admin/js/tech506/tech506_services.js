@@ -185,7 +185,7 @@ Tech506.Sales = {
                     Tech506.Sales.Services.finalizeService();
                 });
 
-                if(Tech506.UI.vars["status"] > 2) {
+                if(Tech506.UI.vars["status"] >= 30) {
                     Tech506.Sales.Services.blockEverything();
                 }
 

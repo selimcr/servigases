@@ -101,6 +101,26 @@ class UserRepository extends CatalogRepository implements UserProviderInterface
         }
     }
 
+    public function checkUniqueIdentification($userId, $identification) {
+        $q = $this
+            ->createQueryBuilder('u')
+            ->select('u, g')
+            ->leftJoin('u.roles', 'g')
+            ->where('u.id <> :userId AND (u.identification = :identification)')
+            ->setParameter('userId', $userId)
+            ->setParameter('identification', $identification)
+            ->getQuery();
+
+        try {
+            // The Query::getSingleResult() method throws an exception
+            // if there is no record matching the criteria.
+            $user = $q->getSingleResult();
+            return false;
+        } catch (NoResultException $e) {
+            return true;
+        }
+    }
+
     public function loadUserByUsername($username) {
         $q = $this
             ->createQueryBuilder('u')

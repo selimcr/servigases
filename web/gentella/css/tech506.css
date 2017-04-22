@@ -95,3 +95,10 @@ input[type="number"].form-control {line-height: 25px;}
 
 textarea.form-control {line-height: 16px; height: 125px;}
 #custom-toolbar {margin-right: -5px;}
+
+
+/**/
+.client-info {}
+.client-info p {margin: 0; line-height: 15px; font-size: 11px;}
+.client-info .name {color: #F05F40; font-weight: bold;}
+.client-info span {font-weight: bold; line-height: 14px;}

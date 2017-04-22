@@ -1,0 +1,301 @@
+{% extends 'Tech506CallServiceBundle:Admin:layouts/admin_layout.html.twig' %}
+
+{% block js %}
+    <script type="text/javascript" src="{{ asset('gentella/js/datepicker/daterangepicker.js') }}"></script>
+    <script src="{{ asset('gentella/js/chartjs/chart.min.js') }}"></script>
+    <script src="{{ asset('gentella/js/sparkline/jquery.sparkline.min.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('gentella/js/flot/jquery.flot.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('gentella/js/flot/jquery.flot.pie.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('gentella/js/flot/jquery.flot.orderBars.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('gentella/js/flot/jquery.flot.time.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('gentella/js/flot/date.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('gentella/js/flot/jquery.flot.spline.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('gentella/js/flot/jquery.flot.stack.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('gentella/js/flot/curvedLines.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('gentella/js/flot/jquery.flot.resize.js') }}"></script>
+
+    <script src="{{ asset('admin/js/tech506/tech506_widgets.js') }}"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            var d1 = [];
+            {% for row in data %}
+                d1.push([new Date('{{ row['date'] }}'), {{ row['counter'] }}]);
+            {% endfor %}
+            Tech506.Widgets.generateMainChart(d1);
+        });
+    </script>
+
+    <!-- datepicker -->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            Tech506.UI.urls["getData"] = "{{ path('_admin_data_completed') }}";
+            var cb = function (start, end, label) {
+                $('#reportrange span').html(start.format('DD/MM/YYYY') + ' - ' + end.format('DD/MM,YYYY'));
+                Tech506.ajaxCall(Tech506.UI.urls["getData"], {
+                            startDate: start.format('YYYY/MM/DD'),
+                            endDate: end.format('YYYY/MM/DD')
+                        },
+                        function(data) {
+                            if(data.error === true) {
+                                Tech506.showErrorMessage(data.message,true, "", false);
+                            } else {
+                                var ds = [];
+                                for (i = 0; i < data.data.length; i++) {
+                                    ds.push([new Date(data.data[i]['date']), data.data[i]['counter'] * 1]);
+                                }
+                                Tech506.Widgets.generateMainChart(ds);
+                            }
+                        },
+                        function(jqXHR, textStatus){
+                            Tech506.showErrorMessage("Error getting data: " + textStatus + ".", true, "", false);
+                            $(this).val("");
+                        }, true);
+            }
+
+            var optionSet1 = {
+                startDate: moment().subtract(6, 'days'),
+                endDate: moment(),
+                minDate: '01/01/2015',
+                //maxDate: '12/31/2015',
+                dateLimit: {
+                    days: 60
+                },
+                showDropdowns: true,
+                showWeekNumbers: true,
+                timePicker: false,
+                timePickerIncrement: 1,
+                timePicker12Hour: true,
+                ranges: {
+                    //'Hoy': [moment(), moment()],
+                    //'Ayer': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Ultimos 7 dias': [moment().subtract(6, 'days'), moment()],
+                    'Ultimos 30 dias': [moment().subtract(29, 'days'), moment()],
+                    'Este mes': [moment().startOf('month'), moment().endOf('month')],
+                    'Mes anterior': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                },
+                opens: 'left',
+                buttonClasses: ['btn btn-default'],
+                applyClass: 'btn-small btn-primary',
+                cancelClass: 'btn-small',
+                format: 'DD/MM/YYYY',
+                separator: ' a ',
+                locale: {
+                    applyLabel: 'Actualizar',
+                    cancelLabel: 'Limpiar',
+                    fromLabel: 'Desde',
+                    toLabel: 'Hasta',
+                    customRangeLabel: 'Custom',
+                    daysOfWeek: ['D', 'L', 'M', 'K', 'J', 'V', 'S'],
+                    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    firstDay: 1
+                }
+            };
+            $('#reportrange span').html(moment().subtract(7, 'days').format('DD/MM/YYYY') + ' - ' + moment().format('DD/MM/YYYY'));
+            $('#reportrange').daterangepicker(optionSet1, cb);
+            $('#reportrange').on('show.daterangepicker', function () {
+                //console.log("show event fired");
+            });
+            $('#reportrange').on('hide.daterangepicker', function () {
+                //console.log("hide event fired");
+            });
+            $('#reportrange').on('apply.daterangepicker', function (ev, picker) {
+                //console.log("apply event fired, start/end dates are " + picker.startDate.format('MMMM D, YYYY') + " to " + picker.endDate.format('MMMM D, YYYY'));
+            });
+            $('#reportrange').on('cancel.daterangepicker', function (ev, picker) {
+                //console.log("cancel event fired");
+            });
+            $('#options1').click(function () {
+                $('#reportrange').data('daterangepicker').setOptions(optionSet1, cb);
+            });
+            $('#options2').click(function () {
+                $('#reportrange').data('daterangepicker').setOptions(optionSet2, cb);
+            });
+            $('#destroy').click(function () {
+                $('#reportrange').data('daterangepicker').remove();
+            });
+        });
+    </script>
+    <!-- /datepicker -->
+    <script>
+        $('document').ready(function () {
+            $(".sparkline_one").sparkline([2, 4, 3, 4, 5, 4, 5, 4, 3, 4, 5, 6, 4, 5, 6, 3, 5, 4, 5, 4, 5, 4, 3, 4, 5, 6, 7, 5, 4, 3, 5, 6], {
+                type: 'bar',
+                height: '125',
+                barWidth: 13,
+                colorMap: {
+                    '7': '#a1a1a1'
+                },
+                barSpacing: 2,
+                barColor: '#26B99A'
+            });
+
+            $(".sparkline11").sparkline([2, 4, 3, 4, 5, 4, 5, 4, 3, 4, 6, 2, 4, 3, 4, 5, 4, 5, 4, 3], {
+                type: 'bar',
+                height: '40',
+                barWidth: 8,
+                colorMap: {
+                    '7': '#a1a1a1'
+                },
+                barSpacing: 2,
+                barColor: '#26B99A'
+            });
+
+            $(".sparkline22").sparkline([2, 4, 3, 4, 7, 5, 4, 3, 5, 6, 2, 4, 3, 4, 5, 4, 5, 4, 3, 4, 6], {
+                type: 'line',
+                height: '40',
+                width: '200',
+                lineColor: '#26B99A',
+                fillColor: '#ffffff',
+                lineWidth: 3,
+                spotColor: '#34495E',
+                minSpotColor: '#34495E'
+            });
+
+            var doughnutData = [
+                {
+                    value: 30,
+                    color: "#455C73"
+                },
+                {
+                    value: 30,
+                    color: "#9B59B6"
+                },
+                {
+                    value: 60,
+                    color: "#BDC3C7"
+                },
+                {
+                    value: 100,
+                    color: "#26B99A"
+                },
+                {
+                    value: 120,
+                    color: "#3498DB"
+                }
+            ];
+            //var myDoughnut = new Chart(document.getElementById("canvas1i").getContext("2d")).Doughnut(doughnutData);
+            //var myDoughnut = new Chart(document.getElementById("canvas1i2").getContext("2d")).Doughnut(doughnutData);
+            //var myDoughnut = new Chart(document.getElementById("canvas1i3").getContext("2d")).Doughnut(doughnutData);
+        });
+    </script>
+{% endblock %}
+
+{% block mainContent %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Servicios Realizados <small>Por fecha de programaci&oacute;n</small></h2>
+                    <div class="filter">
+                        <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
+                            <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                            <span></span> <b class="caret"></b>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="col-md-9 col-sm-12 col-xs-12">
+                        <div class="demo-container" style="height:280px">
+                            <div id="placeholder33x" class="demo-placeholder"></div>
+                        </div>
+                        <div class="tiles">
+                            <div class="col-md-4 tile">
+                                <span>Total Vendidos</span>
+                                <h2>117</h2>
+                                                <span class="sparkline22 graph" style="height: 160px;">
+                                        <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
+                                    </span>
+                            </div>
+                            <div class="col-md-4 tile">
+                                <span>Total Cancelados</span>
+                                <h2>19</h2>
+                                                <span class="sparkline22 graph" style="height: 160px;">
+                                        <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
+                                    </span>
+                            </div>
+                            <div class="col-md-4 tile">
+                                <span>Total Realizados</span>
+                                <h2>98</h2>
+                                                <span class="sparkline22 graph" style="height: 160px;">
+                                        <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
+                                    </span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-3 col-sm-12 col-xs-12">
+                        <div>
+                            <div class="x_title">
+                                <h2>&Uacute;ltimos Servicios Ingresados</h2>
+                                <div class="clearfix"></div>
+                            </div>
+                            <ul class="list-unstyled top_profiles scroll-view">
+                                <li class="media event">
+                                    <a class="pull-left border-aero profile_thumb">
+                                        <i class="fa fa-user aero"></i>
+                                    </a>
+                                    <div class="media-body">
+                                        <a class="title" href="#">Asesora 1</a>
+                                        <p><strong>$2,300.00 </strong> Total Venta </p>
+                                        <p> <small>12 Ventas</small>
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="media event">
+                                    <a class="pull-left border-green profile_thumb">
+                                        <i class="fa fa-user green"></i>
+                                    </a>
+                                    <div class="media-body">
+                                        <a class="title" href="#">Asesora 2</a>
+                                        <p><strong>$2,300.00 </strong> Total Venta </p>
+                                        <p> <small>12 Ventas</small>
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="media event">
+                                    <a class="pull-left border-blue profile_thumb">
+                                        <i class="fa fa-user blue"></i>
+                                    </a>
+                                    <div class="media-body">
+                                        <a class="title" href="#">Asesora 3</a>
+                                        <p><strong>$2,300.00 </strong> Total Venta </p>
+                                        <p> <small>12 Ventas</small>
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="media event">
+                                    <a class="pull-left border-aero profile_thumb">
+                                        <i class="fa fa-user aero"></i>
+                                    </a>
+                                    <div class="media-body">
+                                        <a class="title" href="#">Asesora 4</a>
+                                        <p><strong>$2,300.00 </strong> Total Venta </p>
+                                        <p> <small>12 Ventas</small>
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="media event">
+                                    <a class="pull-left border-green profile_thumb">
+                                        <i class="fa fa-user green"></i>
+                                    </a>
+                                    <div class="media-body">
+                                        <a class="title" href="#">Asesora 5</a>
+                                        <p><strong>$$2,300.00 </strong> Total Venta </p>
+                                        <p> <small>12 Ventas</small>
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock mainContent %}

@@ -24,7 +24,43 @@ class AdminController extends Controller {
      * @Template()
      */
     public function indexAction() {
+
+        $isAdmin = $this->get('security.context')->isGranted('ROLE_ADMIN');
+        if ($isAdmin) {
+            return $this->render(
+                'Tech506CallServiceBundle:Admin:dashboards/index.html.twig',
+                $this->renderAdminDashboard()
+            );
+        } else {
+            return $this->render(
+                'Tech506CallServiceBundle:Admin:dashboards/seller.html.twig',
+                $this->renderSellerDashboard()
+            );
+        }
+    }
+
+    public function renderAdminDashboard() {
         // Get initial data to render the dashboard
+        $em = $this->getDoctrine()->getEntityManager();
+        $today = new \DateTime();
+        $date = strtotime(date_format($today, "Y/m/d") . ' -7 day');
+        $initialDay = date('Y-m-d', $date);
+        $logger = $this->get("logger");
+        $logger->info($initialDay);
+        $result = $em->getRepository('Tech506CallServiceBundle:TechnicianService')
+            ->findServicesCounter($initialDay, date_format($today, "Y/m/d"));
+        $data = "";
+        $logger = $this->get("logger");
+        foreach($result as $row) {
+            $data .= '["' . $row['date'] . '",' . $row['counter'] . '],';
+            //$logger->info($row['date'] . " :: " . $row['counter']);
+        }
+        return array('sales_chart_data' => substr($data, 0, -1),
+            'data' => $result
+        );
+    }
+
+    public function renderSellerDashboard() {
         $em = $this->getDoctrine()->getEntityManager();
         $today = new \DateTime();
         $date = strtotime(date_format($today, "Y/m/d") . ' -7 day');

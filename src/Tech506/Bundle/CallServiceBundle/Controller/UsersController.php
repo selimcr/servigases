@@ -2,6 +2,7 @@
 
 namespace Tech506\Bundle\CallServiceBundle\Controller;
 
+use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\SecurityContext;
@@ -101,13 +102,14 @@ class UsersController extends Controller
             $email = $request->get('email');
             $cellPhone = $request->get('cellPhone');
             $isActive = $request->get('isActive');
+            $identification = $request->get("identification");
             $isCreating = false;
 
             $translator = $this->get("translator");
 
             if( isset($id) && isset($name) && trim($name) != ""
                 && isset($lastname) && trim($lastname) != ""
-                && isset($username) && trim($username) != "") {
+                && isset($username) && trim($username) != "" && trim($identification) != "") {
                 $em = $this->getDoctrine()->getManager();
                 $entity = new User();
                 if($id != 0) { //It's updating, find the user
@@ -120,7 +122,7 @@ class UsersController extends Controller
                     $entity->setCellPhone($cellPhone);
                     $entity->setHomePhone($request->get('homePhone'));
                     $entity->setEmail($email);
-                    $entity->setIdentification($request->get("identification"));
+                    $entity->setIdentification($identification);
                     $entity->setIdentificationType($request->get("identificationType"));
                     $entity->setBirthPlace($request->get("birthPlace"));
                     $entity->setNeighborhood($request->get('neighborhood'));
@@ -129,7 +131,7 @@ class UsersController extends Controller
                     $entity->setMaritalStatus($request->get('maritalStatus'));
                     $entity->setGender($request->get('gender'));
                     $birthDate = $request->get('birthDate');
-                    if(isset($birthDate)) {
+                    if (! empty($birthDate)) {
                         $entity->setBirthdate(new \DateTime($request->get('birthDate')));
                     } else {
                         $entity->setBirthdate(null);
@@ -142,21 +144,28 @@ class UsersController extends Controller
                     }
 
                     if($em->getRepository("Tech506SecurityBundle:User")
-                        ->checkUniqueUsernameAndEmail($username, $email, $id) ) {
+                        ->checkUniqueUsernameAndEmail($username, $email, $id, $identification) ) {
 
-                        $em->persist($entity);
-                        $em->flush();
-                        if($isCreating) { // If it's new must email the new account email including the password
-                            $roleAdmin = $em->getRepository('Tech506SecurityBundle:Role')->findOneByRole(RolesEnum::ADMINISTRATOR);
-                            $entity->getUserRoles()->add($roleAdmin);
+                        if($em->getRepository("Tech506SecurityBundle:User")
+                              ->checkUniqueIdentification($id, $identification) ) {
                             $em->persist($entity);
                             $em->flush();
-                            $logger->info("Send Email for new Account with password: " . $rawPassword);
+                            if($isCreating) { // If it's new must email the new account email including the password
+                                $roleAdmin = $em->getRepository('Tech506SecurityBundle:Role')->findOneByRole(RolesEnum::ADMINISTRATOR);
+                                $entity->getUserRoles()->add($roleAdmin);
+                                $em->persist($entity);
+                                $em->flush();
+                                $logger->info("Send Email for new Account with password: " . Constants::DEFAULT_USERS_PASSWORD);
+                            }
+                            return new Response(json_encode(array(
+                                'error' => false,
+                                'userId' => $entity->getId(),
+                                'msg' => $translator->trans('administrator.save.success'))));
+                        } else {
+                            return new Response(json_encode(array(
+                              'error' => true,
+                              'msg' => $translator->trans('identification.must.be.unique'))));
                         }
-                        return new Response(json_encode(array(
-                            'error' => false,
-                            'userId' => $entity->getId(),
-                            'msg' => $translator->trans('administrator.save.success'))));
                     } else {
                         return new Response(json_encode(array(
                             'error' => true,
@@ -169,7 +178,7 @@ class UsersController extends Controller
                 return new Response(json_encode(array('error' => true, 'msg' => "Missing Parameters 1")));
             }
         } catch (Exception $e) {
-            $info = toString($e);
+            $info = $e->getMessage();
             $logger->err('User::saveAction [' . $info . "]");
             return new Response(json_encode(array('error' => true, 'msg' => $info)));
         }

@@ -230,6 +230,11 @@ extra.customer.info.help: Incluya información adicional de contacto como otro n
 security.code: Código de Seguridad
 security.code.note: Código que el cliente confirma al recibir la visita del Técnico
 enter.date: Fecha
+search: Buscar
+sale.information: Información de Venta
+visit.information: Información de Visita
+scheduling.information: Información de Programación
+search.text: Buscar
 
 # Reports
 Daily Schedule: Programación Diaria
@@ -281,7 +286,8 @@ users: Usuarios
 permissions: Permisos
 select.user.to.review.permissions: Seleccione un Usuario de la lista para administrar sus permisos
 menu.options: Opciones de Menú
-user.username.and.email.must.be.uniques: El nombre de usuario o el email ya se encuentran registrado, por favor intente cambiarlos y probar nuevamente
+user.username.and.email.must.be.uniques: El nombre de usuario o el email ya se encuentran registrado, por favor intente cambiarlos y probar nuevamente.
+identification.must.be.unique: Ya existe un usuario con la identificación ingresada, por favor cambiarla e intentar nuevamente.
 save.menu.options: Guardar Opciones de Menú
 save.permissions: Guardar Permisos
 administrator.save.success: La información del Administrador fue guardada correctamente

@@ -50,3 +50,8 @@ _admin_reports:
     resource: "@Tech506CallServiceBundle/Controller/ReportsController.php"
     type:     annotation
     prefix:   /admin
+
+_admin_dashboard:
+    resource: "@Tech506CallServiceBundle/Controller/DashboardController.php"
+    type:     annotation
+    prefix:   /admin

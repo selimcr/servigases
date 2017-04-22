@@ -83,6 +83,70 @@ class TechnicianServiceRepository extends GenericRepository {
         return $paginator;
     }
 
+    public function findForDashboard($offset, $limit, $search, $sort, $order, $userId, $status, $technician,
+                                             $seller, $date, $search) {
+        $dql = "SELECT d FROM " . $this->getEntityName() . " d 
+        LEFT JOIN d.technician u 
+        LEFT JOIN u.user tu 
+        JOIN d.client c 
+        JOIN d.seller s";
+        $where = "";
+        if ($userId != 0) {
+            $where .= " WHERE s.id = " . $userId;
+            /*$where .= ($search == "")? " WHERE s.id = " . $userId:" WHERE s.id = " . $userId .
+                " AND (u.name LIKE :search OR u.lastname LIKE :search)";*/
+        }
+        if ($status != 0) {
+            $where .= ($where == "")? " WHERE ":" AND ";
+            $where .= "d.status = " . $status;
+        }
+        if ($technician != 0) {
+            $where .= ($where == "")? " WHERE ":" AND ";
+            $where .= "u.id = " . $technician;
+        }
+        if ($seller != 0) {
+            $where .= ($where == "")? " WHERE ":" AND ";
+            $where .= "s.id = " . $seller;
+        }
+        if ( isset($date)) {
+            $where .= ($where == "")? " WHERE ":" AND ";
+            $where .= " (d.creationDate BETWEEN '" . $date->format('Y-m-d 00:00:00') . "'  AND '" . $date->format('Y-m-d 23:59:59') . "')";
+        }
+        if($search != "") {
+            $where .= ($where == "")? " WHERE ":" AND ";
+            $where .= " (c.fullName LIKE :search OR d.addressDetail LIKE :search " .
+                " OR d.addressDetail LIKE :search " .
+                " OR d.neighborhood LIKE :search) ";
+        }
+        $dql .= $where;
+        switch($sort){
+            case 'creationDate':
+            case 'status':
+            case 'id':
+                $dql .= " order by d. " . $sort . " " . $order;
+                break;
+            case 'client':
+                $dql .= " order by c.fullName " . $order;
+                break;
+            case 'technician':
+                $dql .= " order by tu.name, tu.lastname " . $order;
+                break;
+            default:
+                $dql .= ($sort == "")? "":" order by d.creationDate desc";
+                break;
+        }
+        $query = $this->getEntityManager()->createQuery($dql)
+            ->setFirstResult($offset)
+            ->setMaxResults($limit);
+
+        if($search != ""){
+            $query->setParameter('search', "%" . $search . "%");
+        }
+
+        $paginator = new Paginator($query, $fetchJoinCollection = false);
+        return $paginator;
+    }
+
     public function findScheduledServices($sort, $order) {
         $dql = "SELECT d FROM " . $this->getEntityName() . " d LEFT JOIN d.technician u JOIN d.client c JOIN d.seller s";
         $dql .= " WHERE d.status in (" . TechnicianServiceStatus::CREATED . ',' . TechnicianServiceStatus::SCHEDULED . ")";
